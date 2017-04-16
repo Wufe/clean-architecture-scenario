@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  architecture:
+    image: architecture
+    build:
+      context: ./Architecture
+      dockerfile: Dockerfile
