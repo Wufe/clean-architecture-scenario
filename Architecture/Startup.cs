@@ -5,16 +5,23 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Architecture.Services;
+using Architecture.Services.Interfaces;
+using Architecture.Services.Common;
 using Architecture.Database;
 using Architecture.Database.Entities;
+using System;
+using System.IO;
 
 namespace Architecture
 {
     public class Startup
     {
+        private readonly IHostingEnvironment _environment;
+
         public Startup(IHostingEnvironment env)
         {
+            _environment = env;
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -35,9 +42,25 @@ namespace Architecture
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            var useSqliteEnvironment = Environment.GetEnvironmentVariable("USE_SQLITE");
+            bool useSqlite = useSqliteEnvironment != null && useSqliteEnvironment.ToLower().Equals("true");
+
+            if(useSqlite){
+                services.AddDbContext<IdentityContext>(
+                    options =>
+                        options.UseSqlite(
+                            "Data Source=../../../../Database/cas.db"
+                        )
+                );
+            }else{
+                services.AddDbContext<IdentityContext>(
+                    options =>
+                        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                );
+            }
             // Add framework services.
-            services.AddDbContext<IdentityContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityContext>()
