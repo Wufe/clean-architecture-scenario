@@ -9,10 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Architecture.Services.Interfaces;
 using Architecture.Database.Entities;
 using Architecture.ViewModels.Account;
-using Architecture.Models;
+using Architecture.Services.Common;
 
 namespace Architecture.Controllers
 {

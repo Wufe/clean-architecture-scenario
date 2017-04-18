@@ -7,10 +7,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Architecture.Services.Interfaces;
 using Architecture.Database.Entities;
 using Architecture.ViewModels.Account.Manage;
-using Architecture.Models;
+using Architecture.Services.Common;
 
 namespace Architecture.Controllers
 {

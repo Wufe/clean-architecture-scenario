@@ -1,0 +1,28 @@
+
+@{
+    ViewData["Title"] = "Create";
+}
+@model Architecture.ViewModels.Category.CreateCategoryViewModel
+
+<div class="row">
+    <h2>Crea categoria</h2>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-offset-4 col-md-4">
+        <form method="post" asp-controller="CategoryAdmin" asp-action="Create">
+            <div class="form-group">
+                <label>
+                    Titolo:
+                </label>
+                <input type="text" asp-for="@Model.Title" class="form-control" />
+                <br />
+                <span asp-validation-for="@Model.Title"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Aggiungi" class="form-control btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
