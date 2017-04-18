@@ -1,4 +1,5 @@
-﻿using Architecture.Repositories.Category;
+﻿using Architecture.Models.Category;
+using Architecture.Repositories.Category;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,6 +26,13 @@ namespace Architecture.Services.Category
                     }
                 );
             _categoryRepository.Save();
+        }
+
+        public void UpdateCategoryBase(CategoryBase categoryBase)
+        {
+            _categoryRepository
+                .Update();
+
         }
     }
 }

@@ -66,5 +66,21 @@ namespace Architecture.Controllers.Admin
 
             return View(model);
         }
+
+        [HttpPost]
+        [Route("{id}/update")]
+        public async Task<IActionResult> Update(int id, UpdateCategoryViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+            var category =
+                _readCategoryService
+                    .GetCategoryBase(id);
+            if (!await TryUpdateModelAsync(category))
+                return View(model);
+            _writeCategoryService
+                .UpdateCategoryBase(category);
+            return RedirectToAction("ListCategories", "Admin", null);
+        }
     }
 }
