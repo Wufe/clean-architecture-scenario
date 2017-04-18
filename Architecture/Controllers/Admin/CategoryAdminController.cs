@@ -46,5 +46,25 @@ namespace Architecture.Controllers.Admin
                 .AddCategory(model.Title);
             return RedirectToAction("ListCategories", "Admin", null);
         }
+
+        // TODO: Start from here next time
+        [HttpGet]
+        [Route("{id}/update")]
+        public IActionResult Update(int id)
+        {
+            var category =
+                _readCategoryService
+                    .GetCategoryBase(id);
+
+            if (category == null)
+                return NotFound();
+
+            var model = new UpdateCategoryViewModel()
+            {
+                Title = category.Title
+            };
+
+            return View(model);
+        }
     }
 }
