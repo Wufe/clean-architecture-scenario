@@ -27,6 +27,8 @@ namespace Architecture.Database.Entities
 
         public IEnumerable<Rating> Ratings { get; set; } = new List<Rating>();
 
+        public IEnumerable<Cart> Carts { get; set; } = new List<Cart>();
+
 
     }
 }

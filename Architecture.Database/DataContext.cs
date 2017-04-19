@@ -76,6 +76,19 @@ namespace Architecture.Database
                 .HasOne(r => r.User)
                 .WithMany(u => u.Ratings)
                 .HasForeignKey(r => r.UserId);
+
+            builder.Entity<Cart>()
+                .HasKey(t => new { t.ProductId, t.UserId });
+
+            builder.Entity<Cart>()
+                .HasOne(c => c.Product)
+                .WithMany(p => p.Carts)
+                .HasForeignKey(c => c.ProductId);
+
+            builder.Entity<Cart>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Carts)
+                .HasForeignKey(c => c.UserId);
         }
     }
 }

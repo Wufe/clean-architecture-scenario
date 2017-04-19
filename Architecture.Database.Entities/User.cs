@@ -7,5 +7,7 @@ namespace Architecture.Database.Entities
     public class User : IdentityUser<int>
     {
         public IEnumerable<Rating> Ratings { get; set; } = new List<Rating>();
+
+        public IEnumerable<Cart> Carts { get; set; } = new List<Cart>();
     }
 }
