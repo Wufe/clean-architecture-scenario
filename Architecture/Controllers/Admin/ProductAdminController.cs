@@ -78,8 +78,13 @@ namespace Architecture.Controllers.Admin
                 Price = product.Price
             };
 
-            _PopulateBrands(model, product.Brand);
-            _PopulateCategories(model, product.Categories);
+            _PopulateBrands(model, product.Brand.Id.ToString());
+            _PopulateCategories(
+                model,
+                product
+                    .Categories
+                    .Select(x => x.Id.ToString())
+            );
             _PopulateRatings(model, product.Id);
 
             return View(model);
@@ -102,7 +107,8 @@ namespace Architecture.Controllers.Admin
                 var selectedBrandId =
                     int.Parse(
                         model
-                            .SelectedBrand);
+                            .SelectedBrand
+                    );
                 if (await TryUpdateModelAsync(product))
                 {
                     _writeProductService
@@ -117,7 +123,43 @@ namespace Architecture.Controllers.Admin
             return View(model);
         }
 
-        private void _PopulateBrands(GenericEditProductViewModel model, BrandBase selectedBrand = null)
+        [HttpGet]
+        [Route("create")]
+        public IActionResult Create()
+        {
+            var model = new CreateProductViewModel();
+            _PopulateBrands(model);
+            _PopulateCategories(model);
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("create")]
+        public IActionResult Create(CreateProductViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var selectedCategoriesIds =
+                    model
+                        .SelectedCategories
+                        .Select(x => int.Parse(x));
+
+                var selectedBrandId =
+                    int.Parse(
+                        model
+                            .SelectedBrand
+                    );
+
+                _writeProductService
+                    .AddProduct(model.Name, model.Description, model.Price, selectedBrandId, selectedCategoriesIds);
+                return RedirectToAction("ListProducts", "Admin", null);
+            }
+            _PopulateBrands(model, model.SelectedBrand);
+            _PopulateCategories(model, model.SelectedCategories);
+            return View();
+        }
+
+        private void _PopulateBrands(GenericEditProductViewModel model, string selectedBrand = null)
         {
             model.BrandsList =
                 _readBrandService
@@ -128,10 +170,10 @@ namespace Architecture.Controllers.Admin
                         Value = x.Id.ToString()
                     });
 
-            model.SelectedBrand = selectedBrand?.Id.ToString();
+            model.SelectedBrand = selectedBrand;
         }
 
-        private void _PopulateCategories(GenericEditProductViewModel model, IEnumerable<CategoryBase> selectedCategories = null)
+        private void _PopulateCategories(GenericEditProductViewModel model, IEnumerable<string> selectedCategories = null)
         {
             model.CategoriesList =
                 _readCategoryService
@@ -142,9 +184,7 @@ namespace Architecture.Controllers.Admin
                         Value = x.Id.ToString()
                     });
 
-            model.SelectedCategories =
-                selectedCategories?
-                    .Select(x => x.Id.ToString());
+            model.SelectedCategories = selectedCategories;
         }
 
         private void _PopulateRatings(GenericEditProductViewModel model, int productId = -1)
