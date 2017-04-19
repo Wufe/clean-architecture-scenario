@@ -77,7 +77,8 @@ namespace Architecture.Services.Product
                     .ToList();
 
             _DeleteProductCategories(
-                _GetToBeDeletedProductCategories(existingProductCategories, selectedCategoriesIds)
+                _GetToBeDeletedProductCategories(existingProductCategories, selectedCategoriesIds),
+                productBase.Id
             );
 
             _AddProductCategories(
@@ -103,14 +104,18 @@ namespace Architecture.Services.Product
             }
         }
 
-        private void _DeleteProductCategories(IEnumerable<int> toBeDeletedCategoriesLinks)
+        private void _DeleteProductCategories(IEnumerable<int> toBeDeletedCategoriesLinks, int productId)
         {
             foreach (var categoryId in toBeDeletedCategoriesLinks)
             {
                 var productCategory =
                     _productCategoryRepository
                         .GetAll()
-                        .Where(x => x.CategoryId == categoryId)
+                        .Where(
+                            x => 
+                                x.CategoryId == categoryId &&
+                                x.ProductId == productId
+                        )
                         .FirstOrDefault();
                 if (productCategory != null)
                     _productCategoryRepository
