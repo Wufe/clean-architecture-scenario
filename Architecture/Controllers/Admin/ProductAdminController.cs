@@ -32,7 +32,6 @@ namespace Architecture.Controllers.Admin
             IReadProductService readProductService,
             IReadRatingService readRatingService,
             IWriteProductService writeProductService
-            
         )
         {
             _readBrandService = readBrandService;
