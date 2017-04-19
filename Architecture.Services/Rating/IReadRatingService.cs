@@ -8,5 +8,6 @@ namespace Architecture.Services.Rating
     public interface IReadRatingService
     {
         IEnumerable<RatingBase> GetAllRatingsBase();
+        IEnumerable<RatingBase> GetRatingsBaseByProduct(int productId);
     }
 }

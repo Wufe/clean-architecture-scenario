@@ -29,5 +29,15 @@ namespace Architecture.Services.Rating
                     .Select(x => _mapper.Map<Database.Entities.Rating, RatingBase>(x))
                     .ToList();
         }
+
+        public IEnumerable<RatingBase> GetRatingsBaseByProduct(int productId)
+        {
+            return
+                _ratingRepository
+                    .GetAll()
+                    .Where(x => x.ProductId == productId)
+                    .Select(x => _mapper.Map<Database.Entities.Rating, RatingBase>(x))
+                    .ToList();
+        }
     }
 }
