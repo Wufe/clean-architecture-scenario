@@ -11,6 +11,8 @@ using Architecture.Services.Brand;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Architecture.Services.Category;
 using Architecture.Services.Rating;
+using Architecture.Models.Brand;
+using Architecture.Models.Category;
 
 namespace Architecture.Controllers.Admin
 {
@@ -71,14 +73,14 @@ namespace Architecture.Controllers.Admin
                 Product = product
             };
 
-            _PopulateBrands(model, product);
-            _PopulateCategories(model, product);
-            _PopulateRatings(model, product);
+            _PopulateBrands(model, product.Brand);
+            _PopulateCategories(model, product.Categories);
+            _PopulateRatings(model, product.Id);
 
             return View(model);
         }
 
-        private void _PopulateBrands(GenericEditProductViewModel model, ProductFull product)
+        private void _PopulateBrands(GenericEditProductViewModel model, BrandBase selectedBrand = null)
         {
             model.Brands =
                 _readBrandService
@@ -89,10 +91,10 @@ namespace Architecture.Controllers.Admin
                         Value = x.Id.ToString()
                     });
 
-            model.SelectedBrand = product.Brand.Id.ToString();
+            model.SelectedBrand = selectedBrand?.Id.ToString();
         }
 
-        private void _PopulateCategories(GenericEditProductViewModel model, ProductFull product)
+        private void _PopulateCategories(GenericEditProductViewModel model, IEnumerable<CategoryBase> selectedCategories = null)
         {
             model.Categories =
                 _readCategoryService
@@ -104,16 +106,15 @@ namespace Architecture.Controllers.Admin
                     });
 
             model.SelectedCategories =
-                product
-                    .Categories
+                selectedCategories?
                     .Select(x => x.Id.ToString());
         }
 
-        private void _PopulateRatings(GenericEditProductViewModel model, ProductFull product)
+        private void _PopulateRatings(GenericEditProductViewModel model, int productId)
         {
             model.Ratings =
                 _readRatingService
-                    .GetAllRatingsBase();
+                    .GetRatingsBaseByProduct(productId);
         }
     }
 }
