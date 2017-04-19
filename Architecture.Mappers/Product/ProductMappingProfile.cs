@@ -30,6 +30,8 @@ namespace Architecture.Mappers.Product
                     dest => dest.Ratings,
                     prop => prop.ResolveUsing<ProductRatingsResolver>()
                 );
+
+            CreateMap<ProductBase, Database.Entities.Product>();
         }
     }
 }

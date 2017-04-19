@@ -1,0 +1,33 @@
+@model Architecture.ViewModels.Product.GenericEditProductViewModel
+
+<div class="form-group">
+    <label>Nome:</label>
+    <br />
+    <input type="text" asp-for="@Model.Name" class="form-control" />
+    <br />
+    <span class="alert-danger" asp-validation-for="@Model.Name"></span>
+</div>
+<div class="form-group">
+    <label>Descrizione</label>
+    <br />
+    <textarea asp-for="@Model.Description" class="form-control"></textarea>
+    <br />
+    <span class="alert-danger" asp-validation-for="@Model.Description"></span>
+</div>
+<div class="form-group">
+    <label>Prezzo</label>
+    <br />
+    <input type="text" asp-for="@Model.Price" class="form-control" />
+    <br />
+    <span class="alert-danger" asp-validation-for="@Model.Price"></span>
+</div>
+<div class="form-group">
+    <label>Brand</label>
+    <br />
+    <select asp-for="@Model.SelectedBrand" asp-items="@Model.BrandsList" class="form-control"></select>
+</div>
+<div class="form-group">
+    <label>Categorie</label>
+    <br />
+    <select asp-for="@Model.SelectedCategories" asp-items="@Model.CategoriesList" class="form-control"></select>
+</div>

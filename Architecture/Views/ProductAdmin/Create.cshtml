@@ -1,0 +1,17 @@
+@model Architecture.ViewModels.Product.CreateProductViewModel
+
+<div class="row">
+    <h2>Aggiungi prodotto</h2>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-offset-4 col-md-4">
+        <form method="post" asp-controller="ProductAdmin" asp-action="Create">
+            @Html.Partial("_EditProduct", Model)
+
+            <div class="form-group">
+                <input type="submit" value="Aggiungi" class="form-control btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

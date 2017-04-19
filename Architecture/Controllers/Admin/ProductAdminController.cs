@@ -24,12 +24,14 @@ namespace Architecture.Controllers.Admin
         private readonly IReadCategoryService _readCategoryService;
         private readonly IReadProductService _readProductService;
         private readonly IReadRatingService _readRatingService;
+        private readonly IWriteProductService _writeProductService;
 
         public ProductAdminController(
             IReadBrandService readBrandService,
             IReadCategoryService readCategoryService,
             IReadProductService readProductService,
-            IReadRatingService readRatingService
+            IReadRatingService readRatingService,
+            IWriteProductService writeProductService
             
         )
         {
@@ -37,6 +39,7 @@ namespace Architecture.Controllers.Admin
             _readCategoryService = readCategoryService;
             _readProductService = readProductService;
             _readRatingService = readRatingService;
+            _writeProductService = writeProductService;
         }
 
         [HttpPost]
@@ -70,7 +73,9 @@ namespace Architecture.Controllers.Admin
 
             var model = new UpdateProductViewModel()
             {
-                Product = product
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price
             };
 
             _PopulateBrands(model, product.Brand);
@@ -80,9 +85,41 @@ namespace Architecture.Controllers.Admin
             return View(model);
         }
 
+        [HttpPost]
+        [Route("{id}/update")]
+        public async Task<IActionResult> Update(int id, UpdateProductViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var product =
+                    _readProductService
+                        .GetProductBase(id);
+
+                var selectedCategoriesIds =
+                    model
+                        .SelectedCategories
+                        .Select(x => int.Parse(x));
+                var selectedBrandId =
+                    int.Parse(
+                        model
+                            .SelectedBrand);
+                if (await TryUpdateModelAsync(product))
+                {
+                    _writeProductService
+                        .UpdateProductBase(product, selectedBrandId, selectedCategoriesIds);
+                    return RedirectToAction("ListProducts", "Admin", null);
+                }
+                
+            }
+            _PopulateBrands(model);
+            _PopulateCategories(model);
+            _PopulateRatings(model);
+            return View(model);
+        }
+
         private void _PopulateBrands(GenericEditProductViewModel model, BrandBase selectedBrand = null)
         {
-            model.Brands =
+            model.BrandsList =
                 _readBrandService
                     .GetAllBrandsBase()
                     .Select(x => new SelectListItem
@@ -96,7 +133,7 @@ namespace Architecture.Controllers.Admin
 
         private void _PopulateCategories(GenericEditProductViewModel model, IEnumerable<CategoryBase> selectedCategories = null)
         {
-            model.Categories =
+            model.CategoriesList =
                 _readCategoryService
                     .GetAllCategoriesBase()
                     .Select(x => new SelectListItem
@@ -110,11 +147,12 @@ namespace Architecture.Controllers.Admin
                     .Select(x => x.Id.ToString());
         }
 
-        private void _PopulateRatings(GenericEditProductViewModel model, int productId)
+        private void _PopulateRatings(GenericEditProductViewModel model, int productId = -1)
         {
-            model.Ratings =
-                _readRatingService
-                    .GetRatingsBaseByProduct(productId);
+            if(productId != -1)
+                model.RatingsList =
+                    _readRatingService
+                        .GetRatingsBaseByProduct(productId);
         }
     }
 }
