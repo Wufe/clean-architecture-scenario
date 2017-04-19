@@ -20,6 +20,10 @@ using Architecture.Repositories.Shared;
 using Architecture.Repositories.Category;
 using Architecture.Services.Category;
 using Architecture.Mappers.Common;
+using Architecture.Repositories.Brand;
+using Architecture.Services.Brand;
+using Architecture.Repositories.Rating;
+using Architecture.Services.Rating;
 
 namespace Architecture
 {
@@ -113,6 +117,12 @@ namespace Architecture
             services.AddTransient<ICategoryRepository, EFCategoryRepository>();
             services.AddTransient<IReadCategoryService, ReadCategoryService>();
             services.AddTransient<IWriteCategoryService, WriteCategoryService>();
+
+            services.AddTransient<IBrandRepository, EFBrandRepository>();
+            services.AddTransient<IReadBrandService, ReadBrandService>();
+
+            services.AddTransient<IRatingRepository, EFRatingRepository>();
+            services.AddTransient<IReadRatingService, ReadRatingService>();
 
             builder.Populate(services);
             this.ApplicationContainer = builder.Build();

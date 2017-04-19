@@ -1,0 +1,47 @@
+@model Architecture.ViewModels.Product.UpdateProductViewModel
+
+<div class="row">
+    <h2>Modifica prodotto</h2>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-offset-4 col-md-4">
+        <form method="post" asp-controller="ProductAdmin" asp-action="Update">
+            <div class="form-group">
+                <label>Nome:</label>
+                <br />
+                <input type="text" asp-for="@Model.Product.Name" class="form-control" />
+                <br />
+                <span class="alert-danger" asp-validation-for="@Model.Product.Name"></span>
+            </div>
+            <div class="form-group">
+                <label>Descrizione</label>
+                <br />
+                <textarea asp-for="@Model.Product.Description" class="form-control"></textarea>
+                <br />
+                <span class="alert-danger" asp-validation-for="@Model.Product.Description"></span>
+            </div>
+            <div class="form-group">
+                <label>Prezzo</label>
+                <br />
+                <input type="text" asp-for="@Model.Product.Price" class="form-control" />
+                <br />
+                <span class="alert-danger" asp-validation-for="@Model.Product.Price"></span>
+            </div>
+            <div class="form-group">
+                <label>Brand</label>
+                <br />
+                <select asp-for="@Model.SelectedBrand" asp-items="@Model.Brands" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label>Categorie</label>
+                <br />
+                <select asp-for="@Model.SelectedCategories" asp-items="@Model.Categories" class="form-control"></select>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Modifica" class="form-control btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

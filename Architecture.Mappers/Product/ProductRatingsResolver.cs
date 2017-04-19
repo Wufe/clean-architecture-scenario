@@ -23,7 +23,13 @@ namespace Architecture.Mappers.Product
                                 Id = r.Id,
                                 Comment = r.Comment,
                                 Vote = r.Vote,
-                                ProductId = source.Id,
+                                Product = new ProductBase
+                                {
+                                    Id = source.Id,
+                                    Name = source.Name,
+                                    Description = source.Description,
+                                    Price = source.Price
+                                },
                                 User = new UserBase
                                 {
                                     Id = r.User.Id,

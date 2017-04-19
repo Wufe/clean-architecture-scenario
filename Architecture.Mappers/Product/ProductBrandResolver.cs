@@ -1,4 +1,5 @@
-﻿using Architecture.Models.Product;
+﻿using Architecture.Models.Brand;
+using Architecture.Models.Product;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -6,13 +7,15 @@ using System.Text;
 
 namespace Architecture.Mappers.Product
 {
-    public class ProductBrandResolver : IValueResolver<Database.Entities.Product, Models.Product.IProductMinimal, string>
+    public class ProductBrandResolver : IValueResolver<Database.Entities.Product, Models.Product.IProductMinimal, BrandBase>
     {
-        public string Resolve(Database.Entities.Product source, IProductMinimal destination, string destMember, ResolutionContext context)
+        public BrandBase Resolve(Database.Entities.Product source, IProductMinimal destination, BrandBase destMember, ResolutionContext context)
         {
-            return source
-                .Brand?
-                .Name;
+            return new BrandBase
+            {
+                Id = source.Brand.Id,
+                Name = source.Brand.Name
+            };
         }
     }
 }

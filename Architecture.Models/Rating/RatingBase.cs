@@ -1,4 +1,5 @@
-﻿using Architecture.Models.User;
+﻿using Architecture.Models.Product;
+using Architecture.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,7 +14,7 @@ namespace Architecture.Models.Rating
 
         public string Comment { get; set; }
 
-        public int ProductId { get; set; }
+        public ProductBase Product { get; set; }
 
         public UserBase User { get; set; }
     }
