@@ -1,4 +1,5 @@
 ﻿using Architecture.Database.Common;
+using Architecture.Database.Configuration;
 using Architecture.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -37,58 +38,10 @@ namespace Architecture.Database
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-            builder.Entity<ProductCategory>()
-                .HasKey(t => new { t.CategoryId, t.ProductId });
-
-            builder.Entity<ProductCategory>()
-                .HasOne(pt => pt.Product)
-                .WithMany(p => p.ProductCategories)
-                .HasForeignKey(pt => pt.ProductId);
-
-            builder.Entity<ProductCategory>()
-                .HasOne(pt => pt.Category)
-                .WithMany(p => p.ProductCategories)
-                .HasForeignKey(pt => pt.CategoryId);
-
-            builder.Entity<ProductTag>()
-                .HasKey(t => new { t.TagId, t.ProductId });
-
-            builder.Entity<ProductTag>()
-                .HasOne(pt => pt.Product)
-                .WithMany(p => p.ProductTags)
-                .HasForeignKey(pt => pt.ProductId);
-
-            builder.Entity<ProductTag>()
-                .HasOne(pt => pt.Tag)
-                .WithMany(p => p.ProductTags)
-                .HasForeignKey(pt => pt.TagId);
-
-            builder.Entity<Rating>()
-                .HasKey(t => new { t.ProductId, t.UserId });
-
-            builder.Entity<Rating>()
-                .HasOne(r => r.Product)
-                .WithMany(p => p.Ratings)
-                .HasForeignKey(r => r.ProductId);
-
-            builder.Entity<Rating>()
-                .HasOne(r => r.User)
-                .WithMany(u => u.Ratings)
-                .HasForeignKey(r => r.UserId);
-
-            builder.Entity<Cart>()
-                .HasKey(t => new { t.ProductId, t.UserId });
-
-            builder.Entity<Cart>()
-                .HasOne(c => c.Product)
-                .WithMany(p => p.Carts)
-                .HasForeignKey(c => c.ProductId);
-
-            builder.Entity<Cart>()
-                .HasOne(c => c.User)
-                .WithMany(u => u.Carts)
-                .HasForeignKey(c => c.UserId);
+            builder.ConfigureCart();
+            builder.ConfigureProductCategory();
+            builder.ConfigureProductTag();
+            builder.ConfigureRating();
         }
     }
 }
