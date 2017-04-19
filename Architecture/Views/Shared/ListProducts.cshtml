@@ -1,0 +1,51 @@
+
+@{
+    ViewData["Title"] = "Prodotti";
+}
+@model Architecture.ViewModels.Product.ListProductsViewModel
+
+<div class="row">
+    <h2>Modifica Prodotti</h2>
+</div>
+<hr />
+<div class="row">
+    <a asp-controller="CategoryAdmin" asp-action="Create" class="btn btn-success">
+        Aggiungi prodotto
+    </a>
+    <div class="pull-right">
+        <form method="post" asp-controller="ProductAdmin" asp-action="Search">
+            <div class="form-group">
+                <input type="text" asp-for="@Model.SearchText" class="form-control" placeholder="Cerca.." />
+                <br />
+                <span asp-validation-for="@Model.SearchText"></span>
+            </div>
+            
+        </form>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Prezzo</th>
+            <th></th>
+        </tr>
+        @foreach(var product in Model.Products)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>
+                    <a class="btn btn-xs btn-info" asp-controller="ProductAdmin" asp-action="Update" asp-route-id="@product.Id">Modifica</a>
+                    <a class="btn btn-xs btn-primary">Visualizza</a>
+                    <a class="btn btn-xs btn-danger">Cancella</a>
+                </td>
+            </tr>
+
+        }
+    </table>
+</div>
+

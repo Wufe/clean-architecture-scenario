@@ -10,15 +10,8 @@
 <hr />
 <div class="row">
     <div class="col-md-offset-4 col-md-4">
-        <form method="post" asp-controller="CategoryAdmin" asp-action="Edit">
-            <div class="form-group">
-                <label>
-                    Titolo:
-                </label>
-                <input type="text" asp-for="@Model.Title" class="form-control" />
-                <br />
-                <span asp-validation-for="@Model.Title"></span>
-            </div>
+        <form method="post" asp-controller="CategoryAdmin" asp-action="Update">
+            @Html.Partial("_EditCategory", Model)
             <div class="form-group">
                 <input type="submit" value="Modifica" class="form-control btn btn-primary" />
             </div>

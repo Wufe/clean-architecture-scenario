@@ -5,8 +5,9 @@ using System.Text;
 
 namespace Architecture.ViewModels.Category
 {
-    public class CreateCategoryViewModel : GenericEditCategoryViewModel
+    public class GenericEditCategoryViewModel
     {
-        
+        [MinLength(3)]
+        public string Title { get; set; }
     }
 }

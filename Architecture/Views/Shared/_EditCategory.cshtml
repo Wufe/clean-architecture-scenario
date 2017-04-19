@@ -1,0 +1,11 @@
+
+@model Architecture.ViewModels.Category.GenericEditCategoryViewModel
+
+<div class="form-group">
+    <label>
+        Titolo:
+    </label>
+    <input type="text" asp-for="@Model.Title" class="form-control" />
+    <br />
+    <span asp-validation-for="@Model.Title"></span>
+</div>

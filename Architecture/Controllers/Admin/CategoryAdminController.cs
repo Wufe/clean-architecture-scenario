@@ -46,8 +46,7 @@ namespace Architecture.Controllers.Admin
                 .AddCategory(model.Title);
             return RedirectToAction("ListCategories", "Admin", null);
         }
-
-        // TODO: Start from here next time
+        
         [HttpGet]
         [Route("{id}/update")]
         public IActionResult Update(int id)

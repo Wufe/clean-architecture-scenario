@@ -1,8 +1,8 @@
 
 @{
-    ViewData["Title"] = "Categories";
+    ViewData["Title"] = "Categorie";
 }
-@model Architecture.ViewModels.Category.ListCategoryViewModel
+@model Architecture.ViewModels.Category.ListCategoriesViewModel
 
 <div class="row">
     <h2>Modifica categorie</h2>
@@ -27,7 +27,7 @@
                 <td>@category.Id</td>
                 <td>@category.Title</td>
                 <td>
-                    <a class="btn btn-xs btn-info" asp-controller="CategoryAdmin" asp-action="Update">Modifica</a>
+                    <a class="btn btn-xs btn-info" asp-controller="CategoryAdmin" asp-action="Update" asp-route-id="@category.Id">Modifica</a>
                     <a class="btn btn-xs btn-primary">Visualizza</a>
                     <a class="btn btn-xs btn-danger">Cancella</a>
                 </td>

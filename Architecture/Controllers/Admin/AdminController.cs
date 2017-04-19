@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Architecture.ViewModels.Category;
 using Architecture.Services.Category;
+using Architecture.Services.Product;
+using Architecture.ViewModels.Product;
 
 namespace Architecture.Controllers.Admin
 {
@@ -14,12 +16,15 @@ namespace Architecture.Controllers.Admin
     public class AdminController : Controller
     {
         private readonly IReadCategoryService _readCategoryService;
+        private readonly IReadProductService _readProductService;
 
         public AdminController(
-            IReadCategoryService readCategoryService
+            IReadCategoryService readCategoryService,
+            IReadProductService readProductService
         )
         {
             _readCategoryService = readCategoryService;
+            _readProductService = readProductService;
         }
 
         [Route("")]
@@ -31,11 +36,23 @@ namespace Architecture.Controllers.Admin
         [Route("categories")]
         public IActionResult ListCategories()
         {
-            var model = new ListCategoryViewModel()
+            var model = new ListCategoriesViewModel()
             {
                 Categories =
                     _readCategoryService
                         .GetAllCategoriesBase()
+            };
+            return View(model);
+        }
+
+        [Route("products")]
+        public IActionResult ListProducts()
+        {
+            var model = new ListProductsViewModel()
+            {
+                Products =
+                    _readProductService
+                        .GetAllProductsMinimal()
             };
             return View(model);
         }

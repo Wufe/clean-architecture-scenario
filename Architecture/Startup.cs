@@ -19,6 +19,7 @@ using Architecture.Repositories.EntityFramework;
 using Architecture.Repositories.Shared;
 using Architecture.Repositories.Category;
 using Architecture.Services.Category;
+using Architecture.Mappers.Common;
 
 namespace Architecture
 {
@@ -93,7 +94,7 @@ namespace Architecture
                 .AddEntityFrameworkStores<IdentityContext, int>()
                 .AddDefaultTokenProviders();
 
-            services.AddAutoMapper();
+            services.AddAutoMapper(MappingConfiguration.Configure);
 
             services.AddMvc();
 

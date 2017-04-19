@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Architecture.ViewModels.Category
 {
-    public class ListCategoryViewModel
+    public class ListCategoriesViewModel
     {
         public IEnumerable<CategoryBase> Categories { get; set; } = new List<CategoryBase>();
     }

@@ -7,8 +7,16 @@ namespace Architecture.Services.Product
 {
     public interface IReadProductService
     {
+        ProductBase GetProductBase(int id);
+
         ProductMinimal GetProductMinimal(int id);
 
         ProductFull GetProductFull(int id);
+
+        IEnumerable<ProductBase> GetAllProductsBase();
+
+        IEnumerable<ProductMinimal> GetAllProductsMinimal();
+
+        IEnumerable<ProductMinimal> SearchProductsMinimal(string searchText);
     }
 }

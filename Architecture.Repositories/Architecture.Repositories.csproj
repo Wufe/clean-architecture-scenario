@@ -5,12 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="6.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\Architecture.Database.Entities\Architecture.Database.Entities.csproj" />
     <ProjectReference Include="..\Architecture.Models\Architecture.Models.csproj" />
-    <ProjectReference Include="..\Architecture.Repositories\Architecture.Repositories.csproj" />
   </ItemGroup>
 
 </Project>

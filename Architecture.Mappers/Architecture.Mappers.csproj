@@ -9,8 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Architecture.Database\Architecture.Database.csproj" />
     <ProjectReference Include="..\Architecture.Models\Architecture.Models.csproj" />
-    <ProjectReference Include="..\Architecture.Repositories\Architecture.Repositories.csproj" />
   </ItemGroup>
 
 </Project>

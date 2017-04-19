@@ -27,14 +27,13 @@ namespace Architecture.Controllers
         }
         public IActionResult Index()
         {
-            _writeProductService
-                .AddProduct("Nome prodotto", "Descrizione prodotto", 2.00, 1, new List<int>() { 1 });
-            var minimalProduct = _readProductService
-                .GetProductMinimal(1);
-            var category = _readCategoryService
-                .GetCategoryFull(1);
-            //return View();
-            return Json(category);
+            //_writeProductService
+            //    .AddProduct("Nome prodotto", "Descrizione prodotto", 2.00, 1, new List<int>() { 1 });
+            //var minimalProduct = _readProductService
+            //    .GetProductMinimal(1);
+            //var category = _readCategoryService
+            //    .GetCategoryFull(1);
+            return View();
         }
 
         public IActionResult About()

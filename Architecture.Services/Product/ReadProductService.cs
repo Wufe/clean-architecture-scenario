@@ -22,6 +22,22 @@ namespace Architecture.Services.Product
             _mapper = mapper;
         }
 
+        public ProductBase GetProductBase(int id)
+        {
+            var products =
+                _productRepository
+                    .GetAll()
+                    .Where(p => p.Id == id);
+            products = _productRepository
+                    .WithBrand(products);
+            return
+                products
+                    .Select(
+                        p => _mapper.Map<Database.Entities.Product, ProductBase>(p)
+                    )
+                    .FirstOrDefault();
+        }
+
         public ProductMinimal GetProductMinimal(int id)
         {
             var products =
@@ -59,6 +75,60 @@ namespace Architecture.Services.Product
                         p => _mapper.Map<Database.Entities.Product, ProductFull>(p)
                     )
                     .FirstOrDefault();
+        }
+
+        public IEnumerable<ProductBase> GetAllProductsBase()
+        {
+            var products =
+                _productRepository
+                    .GetAll();
+            products = _productRepository
+                    .WithBrand(products);
+            return
+                products
+                    .Select(
+                        p => _mapper.Map<Database.Entities.Product, ProductBase>(p)
+                    )
+                    .ToList();
+        }
+
+        public IEnumerable<ProductMinimal> GetAllProductsMinimal()
+        {
+            var products =
+                _productRepository
+                    .GetAll();
+            products = _productRepository
+                    .WithBrand(products);
+            return
+                products
+                    .Select(
+                        p => _mapper.Map<Database.Entities.Product, ProductMinimal>(p)
+                    )
+                    .ToList();
+        }
+
+        public IEnumerable<ProductMinimal> SearchProductsMinimal(string searchText)
+        {
+            var products =
+                _productRepository
+                    .GetAll();
+                    
+            products = _productRepository
+                    .WithBrand(products);
+
+            products = products
+                .Where(
+                        x =>
+                            x.Name.Contains(searchText) ||
+                            x.Description.Contains(searchText) ||
+                            x.Brand.Name.Contains(searchText)
+                    );
+            return
+                products
+                    .Select(
+                        p => _mapper.Map<Database.Entities.Product, ProductMinimal>(p)
+                    )
+                    .ToList();
         }
     }
 }
