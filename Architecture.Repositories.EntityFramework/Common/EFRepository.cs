@@ -16,7 +16,6 @@ namespace Architecture.Repositories.EntityFramework.Common
         public EFRepository(DbContext context)
         {
             _context = context;
-            Console.WriteLine($"####\n Context Hash{context.GetHashCode()}\n####");
         }
 
         public T Add(T entity)

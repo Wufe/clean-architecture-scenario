@@ -80,24 +80,23 @@ namespace Architecture
                 .AddEntityFrameworkStores<IdentityContext, int>()
                 .AddDefaultTokenProviders();
 
-            // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
+            // Repository registration to autofac container
+            builder.RegisterType<EFBrandRepository>().As<IBrandRepository>();
+            builder.RegisterType<EFCategoryRepository>().As<ICategoryRepository>();
+            builder.RegisterType<EFProductRepository>().As<IProductRepository>();
+            builder.RegisterType<EFProductCategoryRepository>().As<IProductCategoryRepository>();
+            builder.RegisterType<EFRatingRepository>().As<IRatingRepository>();
 
-            services.AddTransient<IProductRepository, EFProductRepository>();
-            services.AddTransient<IReadProductService, ReadProductService>();
-            services.AddTransient<IWriteProductService, WriteProductService>();
+            // Service registration to autofac container
+            builder.RegisterType<ReadBrandService>().As<IReadBrandService>();
+            builder.RegisterType<ReadCategoryService>().As<IReadCategoryService>();
+            builder.RegisterType<ReadProductService>().As<IReadProductService>();
+            builder.RegisterType<ReadRatingService>().As<IReadRatingService>();
+            builder.RegisterType<WriteCategoryService>().As<IWriteCategoryService>();
+            builder.RegisterType<WriteProductService>().As<IWriteProductService>();
 
-            services.AddTransient<IProductCategoryRepository, EFProductCategoryRepository>();
-            services.AddTransient<ICategoryRepository, EFCategoryRepository>();
-            services.AddTransient<IReadCategoryService, ReadCategoryService>();
-            services.AddTransient<IWriteCategoryService, WriteCategoryService>();
-
-            services.AddTransient<IBrandRepository, EFBrandRepository>();
-            services.AddTransient<IReadBrandService, ReadBrandService>();
-
-            services.AddTransient<IRatingRepository, EFRatingRepository>();
-            services.AddTransient<IReadRatingService, ReadRatingService>();
+            builder.RegisterType<AuthMessageSender>().As<IEmailSender>();
+            builder.RegisterType<AuthMessageSender>().As<ISmsSender>();
 
             builder.Populate(services);
             this.ApplicationContainer = builder.Build();
@@ -119,6 +118,12 @@ namespace Architecture
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
                 app.UseBrowserLink();
+                using (var scope = ApplicationContainer.BeginLifetimeScope())
+                {
+                    var dataContext = scope.Resolve<DataContext>();
+                    dataContext.Database.EnsureCreated();
+                    dataContext.EnsureSeedData();
+                }
             }
             else
             {
@@ -128,13 +133,6 @@ namespace Architecture
             app.UseStaticFiles();
 
             app.UseIdentity();
-
-            using (var scope = ApplicationContainer.BeginLifetimeScope())
-            {
-                var dataContext = scope.Resolve<DataContext>();
-                dataContext.Database.EnsureCreated();
-                dataContext.EnsureSeedData();
-            }
 
             app.UseMvc(routes =>
             {
