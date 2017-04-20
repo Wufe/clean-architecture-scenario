@@ -5,11 +5,16 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace Architecture.Database
 {
     public class DataContext : IdentityContext, IDbContext
     {
+        public DataContext(IConfigurationRoot configuration) : base(configuration)
+        {
+        }
+
         public DbSet<Brand> Brands { get; set; }
 
         public DbSet<Category> Categories { get; set; }
@@ -24,15 +29,12 @@ namespace Architecture.Database
 
         public DbSet<Tag> Tags { get; set; }
 
-        public DataContext()
-        {
-
-        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=aspnet-Architecture-77e12622-3a30-4603-a018-866ba0ccb822;Trusted_Connection=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer(
+                _configuration.GetConnectionString("DefaultConnection"));
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

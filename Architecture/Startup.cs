@@ -61,49 +61,24 @@ namespace Architecture
             var useSqliteEnvironment = Environment.GetEnvironmentVariable("USE_SQLITE");
             bool useSqlite = useSqliteEnvironment != null && useSqliteEnvironment.ToLower().Equals("true");
 
-            //if(useSqlite){
-            //    services.AddDbContext<IdentityContext>(
-            //        options =>
-            //            options.UseSqlite(
-            //                "Data Source=../../../../Database/cas.db"
-            //            )
-            //    );
-            //    services.AddDbContext<DataContext>(
-            //        options =>
-            //            options.UseSqlite(
-            //                "Data Source=../../../../Database/cas.db"
-            //            )
-            //    );
-            //}
-            //else{
-            //    services.AddDbContext<IdentityContext>(
-            //        options =>
-            //            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
-            //    );
-            //    services.AddDbContext<DataContext>(
-            //        options =>
-            //            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
-            //    );
-            //}
-            // Add framework services.
-
-            services.AddSingleton(Configuration);
-
-            services.AddScoped<IdentityContext, IdentityContext>();
-            services.AddScoped<DataContext, DataContext>();
-            services.AddScoped<DbContext, DataContext>();
-
-
-            services.AddIdentity<User, IdentityRole<int>>()
-                .AddEntityFrameworkStores<IdentityContext, int>()
-                .AddDefaultTokenProviders();
-
             services.AddAutoMapper(MappingConfiguration.Configure);
 
             services.AddMvc();
 
             // Autofac container
             var builder = new ContainerBuilder();
+
+            builder.RegisterType<IdentityContext>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<DataContext>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<DataContext>().As<DbContext>().InstancePerLifetimeScope();
+
+            //Singleton
+            builder.RegisterInstance<IConfigurationRoot>(Configuration).SingleInstance();
+            //services.AddSingleton(Configuration);
+
+            services.AddIdentity<User, IdentityRole<int>>()
+                .AddEntityFrameworkStores<IdentityContext, int>()
+                .AddDefaultTokenProviders();
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -129,7 +104,7 @@ namespace Architecture
             return new AutofacServiceProvider(this.ApplicationContainer);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
         public void Configure(
             IApplicationBuilder app,
             IHostingEnvironment env,
@@ -154,14 +129,12 @@ namespace Architecture
 
             app.UseIdentity();
 
-            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            using (var scope = ApplicationContainer.BeginLifetimeScope())
             {
-                var dataContext = scope.ServiceProvider.GetService<DataContext>();
+                var dataContext = scope.Resolve<DataContext>();
                 dataContext.Database.EnsureCreated();
                 dataContext.EnsureSeedData();
             }
-
-            // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
 
             app.UseMvc(routes =>
             {
