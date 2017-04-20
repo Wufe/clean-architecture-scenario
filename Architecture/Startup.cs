@@ -68,13 +68,20 @@ namespace Architecture
             // Autofac container
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<IdentityContext>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<DataContext>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<DataContext>().As<DbContext>().InstancePerLifetimeScope();
+            builder.RegisterType<IdentityContext>()
+                .AsSelf()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<DataContext>()
+                .As<DbContext>()
+                .AsSelf()
+                .InstancePerLifetimeScope();
 
             //Singleton
-            builder.RegisterInstance<IConfigurationRoot>(Configuration).SingleInstance();
-            //services.AddSingleton(Configuration);
+            builder.RegisterInstance(Configuration)
+                .As<IConfigurationRoot>()
+                .SingleInstance()
+                .ExternallyOwned();
 
             services.AddIdentity<User, IdentityRole<int>>()
                 .AddEntityFrameworkStores<IdentityContext, int>()
@@ -95,8 +102,9 @@ namespace Architecture
             builder.RegisterType<WriteCategoryService>().As<IWriteCategoryService>();
             builder.RegisterType<WriteProductService>().As<IWriteProductService>();
 
-            builder.RegisterType<AuthMessageSender>().As<IEmailSender>();
-            builder.RegisterType<AuthMessageSender>().As<ISmsSender>();
+            builder.RegisterType<AuthMessageSender>()
+                .As<ISmsSender>()
+                .As<IEmailSender>();
 
             builder.Populate(services);
             this.ApplicationContainer = builder.Build();
