@@ -13,17 +13,17 @@ using System.IO;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
-using Architecture.Services.Product;
 using Architecture.Repositories.Product;
 using Architecture.Repositories.EntityFramework;
 using Architecture.Repositories.Shared;
 using Architecture.Repositories.Category;
-using Architecture.Services.Category;
 using Architecture.Mappers.Common;
 using Architecture.Repositories.Brand;
-using Architecture.Services.Brand;
 using Architecture.Repositories.Rating;
-using Architecture.Services.Rating;
+using Architecture.Services.ProductService;
+using Architecture.Services.CategoryService;
+using Architecture.Services.BrandService;
+using Architecture.Services.RatingService;
 
 namespace Architecture
 {

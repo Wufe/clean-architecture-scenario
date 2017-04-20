@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Architecture.Services.Category;
 using Architecture.ViewModels.Category;
+using Architecture.Services.CategoryService;
 
 namespace Architecture.Controllers.Admin
 {

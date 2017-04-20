@@ -1,11 +1,12 @@
-﻿using Architecture.Models.Category;
+﻿using Architecture.Database.Entities;
+using Architecture.Models.Category;
 using Architecture.Repositories.Category;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Architecture.Services.Category
+namespace Architecture.Services.CategoryService
 {
     public class WriteCategoryService : IWriteCategoryService
     {
@@ -24,7 +25,7 @@ namespace Architecture.Services.Category
         {
             _categoryRepository
                 .Add(
-                    new Database.Entities.Category
+                    new Category
                     {
                         Title = title
                     }
@@ -34,7 +35,7 @@ namespace Architecture.Services.Category
 
         public void UpdateCategoryBase(CategoryBase categoryBase)
         {
-            var category = _mapper.Map<CategoryBase, Database.Entities.Category>(categoryBase);
+            var category = _mapper.Map<CategoryBase, Category>(categoryBase);
             _categoryRepository
                 .Update(category);
             _categoryRepository.Save();

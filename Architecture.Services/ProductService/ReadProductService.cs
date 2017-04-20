@@ -5,8 +5,9 @@ using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Architecture.Database.Entities;
 
-namespace Architecture.Services.Product
+namespace Architecture.Services.ProductService
 {
     public class ReadProductService : IReadProductService
     {
@@ -33,7 +34,7 @@ namespace Architecture.Services.Product
             return
                 products
                     .Select(
-                        p => _mapper.Map<Database.Entities.Product, ProductBase>(p)
+                        p => _mapper.Map<Product, ProductBase>(p)
                     )
                     .FirstOrDefault();
         }
@@ -49,7 +50,7 @@ namespace Architecture.Services.Product
             return
                 products
                     .Select(
-                        p => _mapper.Map<Database.Entities.Product, ProductMinimal>(p)
+                        p => _mapper.Map<Product, ProductMinimal>(p)
                     )
                     .FirstOrDefault();
         }
@@ -72,7 +73,7 @@ namespace Architecture.Services.Product
             return
                 products
                     .Select(
-                        p => _mapper.Map<Database.Entities.Product, ProductFull>(p)
+                        p => _mapper.Map<Product, ProductFull>(p)
                     )
                     .FirstOrDefault();
         }
@@ -87,7 +88,7 @@ namespace Architecture.Services.Product
             return
                 products
                     .Select(
-                        p => _mapper.Map<Database.Entities.Product, ProductBase>(p)
+                        p => _mapper.Map<Product, ProductBase>(p)
                     )
                     .ToList();
         }
@@ -102,7 +103,7 @@ namespace Architecture.Services.Product
             return
                 products
                     .Select(
-                        p => _mapper.Map<Database.Entities.Product, ProductMinimal>(p)
+                        p => _mapper.Map<Product, ProductMinimal>(p)
                     )
                     .ToList();
         }
@@ -126,7 +127,7 @@ namespace Architecture.Services.Product
             return
                 products
                     .Select(
-                        p => _mapper.Map<Database.Entities.Product, ProductMinimal>(p)
+                        p => _mapper.Map<Product, ProductMinimal>(p)
                     )
                     .ToList();
         }

@@ -1,23 +1,24 @@
-﻿using Architecture.Models.Category;
+﻿using Architecture.Database.Entities;
+using Architecture.Models.Category;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Architecture.Mappers.Category
+namespace Architecture.Mappers.CategoryMapper
 {
     public class CategoryMappingProfile : Profile
     {
         public CategoryMappingProfile()
         {
-            CreateMap<Database.Entities.Category, CategoryBase>();
-            CreateMap<Database.Entities.Category, CategoryFull>()
+            CreateMap<Category, CategoryBase>();
+            CreateMap<Category, CategoryFull>()
                 .ForMember(
                     dest => dest.Products,
                     prop => prop.ResolveUsing<CategoryProductsResolver>()
                 );
 
-            CreateMap<CategoryBase, Database.Entities.Category>();
+            CreateMap<CategoryBase, Category>();
         }
     }
 }

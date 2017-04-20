@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Architecture.ViewModels.Product;
-using Architecture.Services.Product;
 using Architecture.Models.Product;
-using Architecture.Services.Brand;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Architecture.Services.Category;
-using Architecture.Services.Rating;
 using Architecture.Models.Brand;
 using Architecture.Models.Category;
+using Architecture.Services.CategoryService;
+using Architecture.Services.BrandService;
+using Architecture.Services.ProductService;
+using Architecture.Services.RatingService;
 
 namespace Architecture.Controllers.Admin
 {

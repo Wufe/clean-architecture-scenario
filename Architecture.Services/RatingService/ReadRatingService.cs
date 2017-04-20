@@ -5,8 +5,9 @@ using Architecture.Models.Rating;
 using Architecture.Repositories.Rating;
 using System.Linq;
 using AutoMapper;
+using Architecture.Database.Entities;
 
-namespace Architecture.Services.Rating
+namespace Architecture.Services.RatingService
 {
     public class ReadRatingService : IReadRatingService
     {
@@ -26,7 +27,7 @@ namespace Architecture.Services.Rating
             return
                 _ratingRepository
                     .GetAll()
-                    .Select(x => _mapper.Map<Database.Entities.Rating, RatingBase>(x))
+                    .Select(x => _mapper.Map<Rating, RatingBase>(x))
                     .ToList();
         }
 
@@ -36,7 +37,7 @@ namespace Architecture.Services.Rating
                 _ratingRepository
                     .GetAll()
                     .Where(x => x.ProductId == productId)
-                    .Select(x => _mapper.Map<Database.Entities.Rating, RatingBase>(x))
+                    .Select(x => _mapper.Map<Rating, RatingBase>(x))
                     .ToList();
         }
     }

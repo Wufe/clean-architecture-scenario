@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Architecture.Database;
-using Architecture.Services.Product;
-using Architecture.Services.Category;
+using Architecture.Services.ProductService;
+using Architecture.Services.CategoryService;
 
 namespace Architecture.Controllers
 {

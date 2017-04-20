@@ -6,8 +6,9 @@ using System.Text;
 using Architecture.Models.Product;
 using AutoMapper;
 using System.Linq;
+using Architecture.Database.Entities;
 
-namespace Architecture.Services.Product
+namespace Architecture.Services.ProductService
 {
     public class WriteProductService : IWriteProductService
     {
@@ -35,7 +36,7 @@ namespace Architecture.Services.Product
         {
             var product = _productRepository
                 .Add(
-                    new Database.Entities.Product
+                    new Product
                     {
                         BrandId = brandId,
                         Description = description,
@@ -47,7 +48,7 @@ namespace Architecture.Services.Product
             {
                 _productCategoryRepository
                     .Add(
-                        new Database.Entities.ProductCategory
+                        new ProductCategory
                         {
                             ProductId = product.Id,
                             CategoryId = categoryId
@@ -59,7 +60,7 @@ namespace Architecture.Services.Product
 
         public void UpdateProductBase(ProductBase productBase, int selectedBrandId, IEnumerable<int> selectedCategoriesIds)
         {
-            var product = _mapper.Map<ProductBase, Database.Entities.Product>(productBase);
+            var product = _mapper.Map<ProductBase, Product>(productBase);
 
             product
                 .BrandId = selectedBrandId;
@@ -94,7 +95,7 @@ namespace Architecture.Services.Product
         {
             foreach (var categoryId in toBeAddedCategoriesLinks)
             {
-                var productCategory = new Database.Entities.ProductCategory
+                var productCategory = new ProductCategory
                 {
                     CategoryId = categoryId,
                     ProductId = productId
@@ -124,7 +125,7 @@ namespace Architecture.Services.Product
         }
 
         private IEnumerable<int> _GetToBeDeletedProductCategories(
-            IEnumerable<Database.Entities.ProductCategory> existingProductCategories,
+            IEnumerable<ProductCategory> existingProductCategories,
             IEnumerable<int> selectedCategoriesIds
         )
         {
@@ -143,7 +144,7 @@ namespace Architecture.Services.Product
         }
 
         private IEnumerable<int> _GetToBeAddedProductCategories(
-            IEnumerable<Database.Entities.ProductCategory> existingProductCategories,
+            IEnumerable<ProductCategory> existingProductCategories,
             IEnumerable<int> selectedCategoriesIds
         )
         {

@@ -1,26 +1,30 @@
-﻿using Architecture.Models.Product;
+﻿using Architecture.Database.Entities;
+using Architecture.Models.Brand;
+using Architecture.Models.Category;
+using Architecture.Models.Product;
 using AutoMapper;
+using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Architecture.Mappers.Product
+namespace Architecture.Mappers.ProductMapper
 {
     public class ProductMappingProfile : Profile
     {
         public ProductMappingProfile()
         {
-            CreateMap<Database.Entities.Product, ProductBase>();
-            CreateMap<Database.Entities.Product, ProductMinimal>()
+            CreateMap<Product, ProductBase>();
+            CreateMap<Product, ProductMinimal>()
                 .ForMember(
                     dest => dest.Brand,
-                    prop => prop.ResolveUsing<ProductBrandResolver>()
+                    prop => prop.MapFrom(x => x.Brand)
                 );
 
-            CreateMap<Database.Entities.Product, ProductFull>()
+            CreateMap<Product, ProductFull>()
                 .ForMember(
                     dest => dest.Brand,
-                    prop => prop.ResolveUsing<ProductBrandResolver>()
+                    prop => prop.MapFrom(x => x.Brand)
                 )
                 .ForMember(
                     dest => dest.Categories,
@@ -31,7 +35,7 @@ namespace Architecture.Mappers.Product
                     prop => prop.ResolveUsing<ProductRatingsResolver>()
                 );
 
-            CreateMap<ProductBase, Database.Entities.Product>();
+            CreateMap<ProductBase, Product>();
         }
     }
 }

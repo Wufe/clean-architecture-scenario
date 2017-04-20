@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Architecture.Services.Product;
+using Architecture.Services.ProductService;
 
 namespace Architecture.Controllers.Api
 {

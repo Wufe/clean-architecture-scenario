@@ -5,8 +5,9 @@ using Architecture.Models.Category;
 using Architecture.Repositories.Category;
 using System.Linq;
 using AutoMapper;
+using Architecture.Database.Entities;
 
-namespace Architecture.Services.Category
+namespace Architecture.Services.CategoryService
 {
     public class ReadCategoryService : IReadCategoryService
     {
@@ -27,7 +28,7 @@ namespace Architecture.Services.Category
             return
                 _categoryRepository
                     .GetAll()
-                    .Select(x => _mapper.Map<Database.Entities.Category, CategoryBase>(x))
+                    .Select(x => _mapper.Map<Category, CategoryBase>(x))
                     .ToList();
         }
 
@@ -42,7 +43,7 @@ namespace Architecture.Services.Category
                     .WithProducts(categories);
             return
                 categories
-                    .Select(x => _mapper.Map<Database.Entities.Category, CategoryBase>(x))
+                    .Select(x => _mapper.Map<Category, CategoryBase>(x))
                     .FirstOrDefault();
         }
 
@@ -57,7 +58,7 @@ namespace Architecture.Services.Category
                     .WithProducts(categories);
             return
                 categories
-                    .Select(x => _mapper.Map<Database.Entities.Category, CategoryFull>(x))
+                    .Select(x => _mapper.Map<Category, CategoryFull>(x))
                     .FirstOrDefault();
         }
     }

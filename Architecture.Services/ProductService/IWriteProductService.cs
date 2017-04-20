@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Architecture.Services.Product
+namespace Architecture.Services.ProductService
 {
     public interface IWriteProductService
     {

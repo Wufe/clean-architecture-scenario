@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Architecture.ViewModels.Category;
-using Architecture.Services.Category;
-using Architecture.Services.Product;
 using Architecture.ViewModels.Product;
+using Architecture.Services.CategoryService;
+using Architecture.Services.ProductService;
 
 namespace Architecture.Controllers.Admin
 {

@@ -1,11 +1,8 @@
-﻿using Architecture.Mappers.Brand;
-using Architecture.Mappers.Category;
-using Architecture.Mappers.Product;
-using Architecture.Mappers.Rating;
+﻿using Architecture.Mappers.BrandMapper;
+using Architecture.Mappers.CategoryMapper;
+using Architecture.Mappers.ProductMapper;
+using Architecture.Mappers.RatingMapper;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Architecture.Mappers.Common
 {

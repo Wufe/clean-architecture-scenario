@@ -5,8 +5,9 @@ using Architecture.Models.Brand;
 using Architecture.Repositories.Brand;
 using System.Linq;
 using AutoMapper;
+using Architecture.Database.Entities;
 
-namespace Architecture.Services.Brand
+namespace Architecture.Services.BrandService
 {
     public class ReadBrandService : IReadBrandService
     {
@@ -26,7 +27,7 @@ namespace Architecture.Services.Brand
             return
                 _brandRepository
                     .GetAll()
-                    .Select(x => _mapper.Map<Database.Entities.Brand, BrandBase>(x))
+                    .Select(x => _mapper.Map<Brand, BrandBase>(x))
                     .ToList();
         }
     }

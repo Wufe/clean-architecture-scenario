@@ -1,4 +1,5 @@
-﻿using Architecture.Models.Product;
+﻿using Architecture.Database.Entities;
+using Architecture.Models.Product;
 using Architecture.Models.Rating;
 using Architecture.Models.User;
 using AutoMapper;
@@ -7,11 +8,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Architecture.Mappers.Product
+namespace Architecture.Mappers.ProductMapper
 {
-    public class ProductRatingsResolver : IValueResolver<Database.Entities.Product, IProductFull, IEnumerable<RatingBase>>
+    public class ProductRatingsResolver : IValueResolver<Product, IProductFull, IEnumerable<RatingBase>>
     {
-        public IEnumerable<RatingBase> Resolve(Database.Entities.Product source, IProductFull destination, IEnumerable<RatingBase> destMember, ResolutionContext context)
+        public IEnumerable<RatingBase> Resolve(Product source, IProductFull destination, IEnumerable<RatingBase> destMember, ResolutionContext context)
         {
             return
                 source

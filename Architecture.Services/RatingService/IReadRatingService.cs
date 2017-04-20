@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Architecture.Services.Rating
+namespace Architecture.Services.RatingService
 {
     public interface IReadRatingService
     {
