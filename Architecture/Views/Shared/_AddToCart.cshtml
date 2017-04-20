@@ -1,0 +1,12 @@
+@using Microsoft.AspNetCore.Identity
+@using Architecture.Database.Entities
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="row">
+        <a asp-action="AddToCart" asp-controller="ProductFront" class="btn btn-primary">Aggiungi al carrello</a>
+    </div>
+}

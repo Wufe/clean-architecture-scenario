@@ -8,7 +8,7 @@ namespace Architecture.Database.Entities
 {
     public class Cart : IEntity // AKA ProductUser
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [NotMapped]
         public int Id { get; set; }
 
         public double Quantity { get; set; }

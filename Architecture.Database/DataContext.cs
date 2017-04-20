@@ -17,6 +17,8 @@ namespace Architecture.Database
 
         public DbSet<Brand> Brands { get; set; }
 
+        public DbSet<Cart> Carts { get; set; }
+
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Product> Products { get; set; }
@@ -39,11 +41,11 @@ namespace Architecture.Database
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
             builder.ConfigureCart();
             builder.ConfigureProductCategory();
             builder.ConfigureProductTag();
             builder.ConfigureRating();
+            base.OnModelCreating(builder);
         }
     }
 }

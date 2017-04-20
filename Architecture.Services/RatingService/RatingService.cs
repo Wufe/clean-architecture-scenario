@@ -9,12 +9,12 @@ using Architecture.Database.Entities;
 
 namespace Architecture.Services.RatingService
 {
-    public class ReadRatingService : IReadRatingService
+    public class RatingService : IRatingService
     {
         private readonly IRatingRepository _ratingRepository;
         private readonly IMapper _mapper;
 
-        public ReadRatingService(
+        public RatingService(
             IRatingRepository ratingRepository,
             IMapper mapper
         )

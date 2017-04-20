@@ -9,12 +9,12 @@ using Architecture.Database.Entities;
 
 namespace Architecture.Services.CategoryService
 {
-    public class ReadCategoryService : IReadCategoryService
+    public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
 
-        public ReadCategoryService(
+        public CategoryService(
             ICategoryRepository categoryRepository,
             IMapper mapper
         )
@@ -60,6 +60,26 @@ namespace Architecture.Services.CategoryService
                 categories
                     .Select(x => _mapper.Map<Category, CategoryFull>(x))
                     .FirstOrDefault();
+        }
+
+        public void AddCategory(string title)
+        {
+            _categoryRepository
+                .Add(
+                    new Category
+                    {
+                        Title = title
+                    }
+                );
+            _categoryRepository.Save();
+        }
+
+        public void UpdateCategoryBase(CategoryBase categoryBase)
+        {
+            var category = _mapper.Map<CategoryBase, Category>(categoryBase);
+            _categoryRepository
+                .Update(category);
+            _categoryRepository.Save();
         }
     }
 }

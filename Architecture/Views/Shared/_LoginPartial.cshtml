@@ -12,6 +12,10 @@
                 <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
             </li>
             <li>
+                <a class="glyphicon glyphicon-shopping-cart" style="font-size: 2.7rem; color: white; cursor: pointer"
+                   asp-controller="Cart" asp-action="Index"></a>
+            </li>
+            <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
             </li>
         </ul>

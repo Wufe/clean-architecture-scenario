@@ -13,32 +13,31 @@ using Architecture.Services.CategoryService;
 using Architecture.Services.BrandService;
 using Architecture.Services.ProductService;
 using Architecture.Services.RatingService;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Architecture.Controllers.Admin
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("admin/products")]
     public class ProductAdminController : Controller
     {
-        private readonly IReadBrandService _readBrandService;
-        private readonly IReadCategoryService _readCategoryService;
-        private readonly IReadProductService _readProductService;
-        private readonly IReadRatingService _readRatingService;
-        private readonly IWriteProductService _writeProductService;
+        private readonly IBrandService _brandService;
+        private readonly ICategoryService _categoryService;
+        private readonly IProductService _productService;
+        private readonly IRatingService _ratingService;
 
         public ProductAdminController(
-            IReadBrandService readBrandService,
-            IReadCategoryService readCategoryService,
-            IReadProductService readProductService,
-            IReadRatingService readRatingService,
-            IWriteProductService writeProductService
+            IBrandService brandService,
+            ICategoryService categoryService,
+            IProductService productService,
+            IRatingService ratingService
         )
         {
-            _readBrandService = readBrandService;
-            _readCategoryService = readCategoryService;
-            _readProductService = readProductService;
-            _readRatingService = readRatingService;
-            _writeProductService = writeProductService;
+            _brandService = brandService;
+            _categoryService = categoryService;
+            _productService = productService;
+            _ratingService = ratingService;
         }
 
         [HttpPost]
@@ -48,13 +47,13 @@ namespace Architecture.Controllers.Admin
             if(!ModelState.IsValid || String.IsNullOrEmpty(model.SearchText))
             {
                 model.Products =
-                    _readProductService
+                    _productService
                         .GetAllProductsMinimal();
                 return View("ListProducts", model);
             }
 
             model.Products =
-                    _readProductService
+                    _productService
                         .SearchProductsMinimal(model.SearchText);
 
             return View("ListProducts", model);
@@ -65,7 +64,7 @@ namespace Architecture.Controllers.Admin
         public IActionResult Update(int id)
         {
             var product =
-                _readProductService
+                _productService
                     .GetProductFull(id);
             if (product == null)
                 return NotFound();
@@ -96,7 +95,7 @@ namespace Architecture.Controllers.Admin
             if (ModelState.IsValid)
             {
                 var product =
-                    _readProductService
+                    _productService
                         .GetProductBase(id);
 
                 var selectedCategoriesIds =
@@ -110,7 +109,7 @@ namespace Architecture.Controllers.Admin
                     );
                 if (await TryUpdateModelAsync(product))
                 {
-                    _writeProductService
+                    _productService
                         .UpdateProductBase(product, selectedBrandId, selectedCategoriesIds);
                     return RedirectToAction("ListProducts", "Admin", null);
                 }
@@ -149,7 +148,7 @@ namespace Architecture.Controllers.Admin
                             .SelectedBrand
                     );
 
-                _writeProductService
+                _productService
                     .AddProduct(model.Name, model.Description, model.Price, selectedBrandId, selectedCategoriesIds);
                 return RedirectToAction("ListProducts", "Admin", null);
             }
@@ -161,7 +160,7 @@ namespace Architecture.Controllers.Admin
         private void _PopulateBrands(GenericEditProductViewModel model, string selectedBrand = null)
         {
             model.BrandsList =
-                _readBrandService
+                _brandService
                     .GetAllBrandsBase()
                     .Select(x => new SelectListItem
                     {
@@ -175,7 +174,7 @@ namespace Architecture.Controllers.Admin
         private void _PopulateCategories(GenericEditProductViewModel model, IEnumerable<string> selectedCategories = null)
         {
             model.CategoriesList =
-                _readCategoryService
+                _categoryService
                     .GetAllCategoriesBase()
                     .Select(x => new SelectListItem
                     {
@@ -190,7 +189,7 @@ namespace Architecture.Controllers.Admin
         {
             if(productId != -1)
                 model.RatingsList =
-                    _readRatingService
+                    _ratingService
                         .GetRatingsBaseByProduct(productId);
         }
     }

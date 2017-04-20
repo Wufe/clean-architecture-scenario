@@ -12,20 +12,20 @@ namespace Architecture.Controllers.Api
     [Route("api/products")]
     public class ProductController : Controller
     {
-        private readonly IReadProductService _readProductService;
+        private readonly IProductService _productService;
 
         public ProductController(
-            IReadProductService readProductService
+            IProductService productService
         )
         {
-            _readProductService = readProductService;
+            _productService = productService;
         }
 
         [Route("{id}")]
         public IActionResult Read(int id)
         {
             var product =
-                _readProductService
+                _productService
                     .GetProductMinimal(id);
             return Json(product);
         }
@@ -34,7 +34,7 @@ namespace Architecture.Controllers.Api
         public IActionResult ReadFull(int id)
         {
             var product =
-                _readProductService
+                _productService
                     .GetProductFull(id);
             return Json(product);
         }

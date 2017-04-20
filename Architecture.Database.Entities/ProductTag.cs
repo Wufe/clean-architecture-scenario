@@ -8,7 +8,7 @@ namespace Architecture.Database.Entities
 {
     public class ProductTag : IEntity
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [NotMapped]
         public int Id { get; set; }
 
         public int ProductId { get; set; }

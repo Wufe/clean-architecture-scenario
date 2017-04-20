@@ -6,23 +6,22 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Architecture.ViewModels.Category;
 using Architecture.Services.CategoryService;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Architecture.Controllers.Admin
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("admin/categories")]
     public class CategoryAdminController : Controller
     {
-        private readonly IWriteCategoryService _writeCategoryService;
-        private readonly IReadCategoryService _readCategoryService;
+        private readonly ICategoryService _categoryService;
 
         public CategoryAdminController(
-            IReadCategoryService readCategoryService,
-            IWriteCategoryService writeCategoryService
+            ICategoryService categoryService
         )
         {
-            _readCategoryService = readCategoryService;
-            _writeCategoryService = writeCategoryService;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
@@ -42,7 +41,7 @@ namespace Architecture.Controllers.Admin
         {
             if (!ModelState.IsValid)
                 return View(model);
-            _writeCategoryService
+            _categoryService
                 .AddCategory(model.Title);
             return RedirectToAction("ListCategories", "Admin", null);
         }
@@ -52,7 +51,7 @@ namespace Architecture.Controllers.Admin
         public IActionResult Update(int id)
         {
             var category =
-                _readCategoryService
+                _categoryService
                     .GetCategoryBase(id);
 
             if (category == null)
@@ -73,11 +72,11 @@ namespace Architecture.Controllers.Admin
             if (!ModelState.IsValid)
                 return View(model);
             var category =
-                _readCategoryService
+                _categoryService
                     .GetCategoryBase(id);
             if (!await TryUpdateModelAsync(category))
                 return View(model);
-            _writeCategoryService
+            _categoryService
                 .UpdateCategoryBase(category);
             return RedirectToAction("ListCategories", "Admin", null);
         }

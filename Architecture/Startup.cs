@@ -9,7 +9,6 @@ using Architecture.Services.Common;
 using Architecture.Database;
 using Architecture.Database.Entities;
 using System;
-using System.IO;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
@@ -24,6 +23,9 @@ using Architecture.Services.ProductService;
 using Architecture.Services.CategoryService;
 using Architecture.Services.BrandService;
 using Architecture.Services.RatingService;
+using Architecture.Repositories.Cart;
+using Architecture.Services.UserService;
+using Architecture.Repositories.User;
 
 namespace Architecture
 {
@@ -89,18 +91,19 @@ namespace Architecture
 
             // Repository registration to autofac container
             builder.RegisterType<EFBrandRepository>().As<IBrandRepository>();
+            builder.RegisterType<EFCartRepository>().As<ICartRepository>();
             builder.RegisterType<EFCategoryRepository>().As<ICategoryRepository>();
             builder.RegisterType<EFProductRepository>().As<IProductRepository>();
             builder.RegisterType<EFProductCategoryRepository>().As<IProductCategoryRepository>();
             builder.RegisterType<EFRatingRepository>().As<IRatingRepository>();
+            builder.RegisterType<EFUserRepository>().As<IUserRepository>();
 
             // Service registration to autofac container
-            builder.RegisterType<ReadBrandService>().As<IReadBrandService>();
-            builder.RegisterType<ReadCategoryService>().As<IReadCategoryService>();
-            builder.RegisterType<ReadProductService>().As<IReadProductService>();
-            builder.RegisterType<ReadRatingService>().As<IReadRatingService>();
-            builder.RegisterType<WriteCategoryService>().As<IWriteCategoryService>();
-            builder.RegisterType<WriteProductService>().As<IWriteProductService>();
+            builder.RegisterType<ReadBrandService>().As<IBrandService>();
+            builder.RegisterType<CategoryService>().As<ICategoryService>();
+            builder.RegisterType<ProductService>().As<IProductService>();
+            builder.RegisterType<RatingService>().As<IRatingService>();
+            builder.RegisterType<UserService>().As<IUserService>();
 
             builder.RegisterType<AuthMessageSender>()
                 .As<ISmsSender>()

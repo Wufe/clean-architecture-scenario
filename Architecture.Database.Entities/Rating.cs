@@ -8,7 +8,7 @@ namespace Architecture.Database.Entities
 {
     public class Rating : IEntity
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [NotMapped]
         public int Id { get; set; }
 
         public Product Product { get; set; }

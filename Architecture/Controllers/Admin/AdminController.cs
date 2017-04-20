@@ -8,23 +8,25 @@ using Architecture.ViewModels.Category;
 using Architecture.ViewModels.Product;
 using Architecture.Services.CategoryService;
 using Architecture.Services.ProductService;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Architecture.Controllers.Admin
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("admin")]
     public class AdminController : Controller
     {
-        private readonly IReadCategoryService _readCategoryService;
-        private readonly IReadProductService _readProductService;
+        private readonly ICategoryService _categoryService;
+        private readonly IProductService _productService;
 
         public AdminController(
-            IReadCategoryService readCategoryService,
-            IReadProductService readProductService
+            ICategoryService categoryService,
+            IProductService productService
         )
         {
-            _readCategoryService = readCategoryService;
-            _readProductService = readProductService;
+            _categoryService = categoryService;
+            _productService = productService;
         }
 
         [Route("")]
@@ -39,7 +41,7 @@ namespace Architecture.Controllers.Admin
             var model = new ListCategoriesViewModel()
             {
                 Categories =
-                    _readCategoryService
+                    _categoryService
                         .GetAllCategoriesBase()
             };
             return View(model);
@@ -51,7 +53,7 @@ namespace Architecture.Controllers.Admin
             var model = new ListProductsViewModel()
             {
                 Products =
-                    _readProductService
+                    _productService
                         .GetAllProductsMinimal()
             };
             return View(model);

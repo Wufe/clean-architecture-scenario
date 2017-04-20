@@ -1,0 +1,44 @@
+@model Architecture.ViewModels.Product.ShowProductViewModel
+@{
+    ViewData["Title"] = $"{Model.Brand.Name} - {Model.Name}";
+}
+
+<div class="row text-center">
+    <h3>@Model.Brand.Name - @Model.Name</h3>
+</div>
+<div class="row">
+    <div class="col-md-offset-2">
+        Categorie: @Model.Categories.Select(x => x.Title).Aggregate((x, y) => $"{x} - {y}")
+    </div>
+    <div class="col-md-offset-2">
+        <p>
+            Descrizione: @Model.Description
+        </p>
+    </div>
+    <div class="col-md-offset-2">
+        <p>
+            Prezzo: @String.Format("{0:C}", Model.Price)
+        </p>
+    </div>
+</div>
+@Html.Partial("_AddToCart")
+<div class="row">
+    <div class="col-md-offset-2">
+        @foreach(var rating in Model.Ratings)
+        {
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    @rating.User.UserName - @rating.Vote
+                </div>
+                @if (!String.IsNullOrEmpty(rating.Comment))
+                {
+                    <div class="panel-body">
+                        @rating.Comment
+                    </div>
+                }
+                
+            </div>
+
+        }
+    </div>
+</div>

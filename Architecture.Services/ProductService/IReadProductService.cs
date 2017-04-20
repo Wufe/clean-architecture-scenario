@@ -1,6 +1,7 @@
 ﻿using Architecture.Models.Product;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 
 namespace Architecture.Services.ProductService
@@ -18,5 +19,9 @@ namespace Architecture.Services.ProductService
         IEnumerable<ProductMinimal> GetAllProductsMinimal();
 
         IEnumerable<ProductMinimal> SearchProductsMinimal(string searchText);
+
+        IEnumerable<ProductBase> GetAllProductsInCart(int userId);
+
+        IEnumerable<ProductBase> GetAllProductsInCart(ClaimsPrincipal userClaim);
     }
 }
