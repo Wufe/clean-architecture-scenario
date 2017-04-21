@@ -3,10 +3,8 @@ using Architecture.Models.Product;
 using Architecture.Models.Rating;
 using Architecture.Models.User;
 using AutoMapper;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Architecture.Mappers.ProductMapper
 {
