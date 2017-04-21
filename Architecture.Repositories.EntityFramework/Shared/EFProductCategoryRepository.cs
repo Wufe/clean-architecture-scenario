@@ -1,12 +1,12 @@
-﻿using Architecture.Database.Entities;
+﻿using Architecture.Database.Entities.Shared;
 using Architecture.Repositories.EntityFramework.Common;
+using Architecture.Repositories.Shared;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-using Architecture.Repositories.Shared;
 
-namespace Architecture.Repositories.EntityFramework
+namespace Architecture.Repositories.EntityFramework.Shared
 {
     public class EFProductCategoryRepository : EFRepository<ProductCategory>, IProductCategoryRepository
     {

@@ -1,4 +1,5 @@
-﻿using Architecture.Models.Interfaces;
+﻿using Architecture.Database.Entities.Shared;
+using Architecture.Models.Interfaces;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Collections.Generic;
 
@@ -9,6 +10,6 @@ namespace Architecture.Database.Entities
     {
         public IEnumerable<Rating> Ratings { get; set; } = new List<Rating>();
 
-        public IEnumerable<Cart> Carts { get; set; } = new List<Cart>();
+        public IEnumerable<ProductUser> ProductUsers { get; set; } = new List<ProductUser>();
     }
 }

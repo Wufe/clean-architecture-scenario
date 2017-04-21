@@ -5,33 +5,33 @@ using System.Linq;
 using System.Collections.Generic;
 using Architecture.Database.Entities;
 using Architecture.Repositories.Shared;
-using Architecture.Repositories.Cart;
 using System;
 using Architecture.Services.UserService;
 using System.Security.Claims;
+using Architecture.Database.Entities.Shared;
 
 namespace Architecture.Services.ProductService
 {
     public class ProductService : IProductService
     {
         private readonly IMapper _mapper;
-        private readonly ICartRepository _cartRepository;
         private readonly IProductRepository _productRepository;
         private readonly IProductCategoryRepository _productCategoryRepository;
+        private readonly IProductUserRepository _productUserRepository;
         private readonly IUserService _userService;
 
         public ProductService(
             IMapper mapper,
-            ICartRepository cartRepository,
             IProductRepository productRepository,
             IProductCategoryRepository productCategoryRepository,
+            IProductUserRepository productUserRepository,
             IUserService userService
         )
         {
             _mapper = mapper;
-            _cartRepository = cartRepository;
             _productRepository = productRepository;
             _productCategoryRepository = productCategoryRepository;
+            _productUserRepository = productUserRepository;
             _userService = userService;
         }
 
@@ -151,6 +151,18 @@ namespace Architecture.Services.ProductService
 
         public void AddProduct(string name, string description, double price, int brandId, IEnumerable<int> categoriesIds)
         {
+            var categoriesLinks = new List<ProductCategory>();
+            foreach (int categoryId in categoriesIds)
+            {
+                categoriesLinks
+                    .Add(
+                        new ProductCategory
+                        {
+                            CategoryId = categoryId
+                        }
+                    );
+            }
+
             var product = _productRepository
                 .Add(
                     new Product
@@ -158,20 +170,11 @@ namespace Architecture.Services.ProductService
                         BrandId = brandId,
                         Description = description,
                         Name = name,
-                        Price = price
+                        Price = price,
+                        ProductCategories = categoriesLinks
                     }
                 );
-            foreach (int categoryId in categoriesIds)
-            {
-                _productCategoryRepository
-                    .Add(
-                        new ProductCategory
-                        {
-                            ProductId = product.Id,
-                            CategoryId = categoryId
-                        }
-                    );
-            }
+            
             _productRepository.Save();
         }
 
@@ -182,27 +185,27 @@ namespace Architecture.Services.ProductService
             product
                 .BrandId = selectedBrandId;
 
-            _productRepository
-                .Update(product);
-
-            var toBeDeletedCategoriesLinks = new List<int>();
-            var toBeAddedCategoriesLinks = new List<int>();
-
             var existingProductCategories =
                 _productCategoryRepository
                     .GetAll()
-                    .Where(x => x.ProductId == productBase.Id)
+                    .Where(
+                        x =>
+                            x.ProductId == productBase.Id
+                    )
                     .ToList();
 
             _DeleteProductCategories(
                 _GetToBeDeletedProductCategories(existingProductCategories, selectedCategoriesIds),
-                productBase.Id
+                product.Id
             );
 
             _AddProductCategories(
                 _GetToBeAddedProductCategories(existingProductCategories, selectedCategoriesIds),
-                productBase.Id
+                product.Id
             );
+
+            _productRepository
+                .Update(product);
 
             _productRepository
                 .Save();
@@ -282,7 +285,7 @@ namespace Architecture.Services.ProductService
         public void AddToCart(int productId, int userId, double quantity = 1)
         {
             var cart =
-                _cartRepository
+                _productUserRepository
                     .GetAll()
                     .Where(
                         x =>
@@ -292,9 +295,9 @@ namespace Architecture.Services.ProductService
                     .FirstOrDefault();
             if (cart == null)
             {
-                _cartRepository
+                _productUserRepository
                     .Add(
-                        new Cart
+                        new ProductUser
                         {
                             ProductId = productId,
                             UserId = userId,
@@ -305,11 +308,11 @@ namespace Architecture.Services.ProductService
             else
             {
                 cart.Quantity += 1;
-                _cartRepository
+                _productUserRepository
                     .Update(cart);
             }
             
-            _cartRepository.Save();
+            _productUserRepository.Save();
         }
 
         public void AddToCart(int productId, ClaimsPrincipal userClaim, double quantity = 1)
@@ -320,37 +323,6 @@ namespace Architecture.Services.ProductService
             if (userId == default(int))
                 throw new UnauthorizedAccessException();
             AddToCart(productId, userId, quantity);
-        }
-
-        public IEnumerable<ProductFull> GetAllProductsInCart(int userId)
-        {
-            var carts =
-                _cartRepository
-                    .GetAll()
-                    .Where(
-                        x =>
-                            x.UserId == userId
-                    );
-            carts =
-                _cartRepository
-                    .WithProducts(carts);
-
-            // TODO: Continue from here
-            return
-                carts
-                    .ToList()
-                    .Select(x => Mapper.Map<Cart, CartBase>(x));
-                
-        }
-
-        public IEnumerable<ProductFull> GetAllProductsInCart(ClaimsPrincipal userClaim)
-        {
-            var userId =
-                _userService
-                    .GetUserIdByClaim(userClaim);
-            if (userId == default(int))
-                throw new ArgumentNullException("ClaimsPrincipal");
-            return GetAllProductsInCart(userId);
         }
         
     }

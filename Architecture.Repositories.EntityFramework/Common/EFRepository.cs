@@ -9,7 +9,7 @@ using Architecture.Models.Interfaces;
 namespace Architecture.Repositories.EntityFramework.Common
 {
     public abstract class EFRepository<T> : IRepository<T>
-        where T: class, IEntity
+        where T: class
     {
         protected readonly DbContext _context;
 
@@ -27,14 +27,6 @@ namespace Architecture.Repositories.EntityFramework.Common
         public IQueryable<T> GetAll()
         {
             return _context.Set<T>();
-        }
-
-        public T GetById(int id)
-        {
-            return
-                GetAll()
-                .Where(x => x.Id == id)
-                .FirstOrDefault();
         }
 
         public void Remove(T entity)

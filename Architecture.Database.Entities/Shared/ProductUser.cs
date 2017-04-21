@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Architecture.Database.Entities
+namespace Architecture.Database.Entities.Shared
 {
-    public class Cart : IEntity // AKA ProductUser
+    /// <summary>
+    /// Represents an item in a cart.
+    /// Many to many relationship between Product and User.
+    /// </summary>
+    public class ProductUser : IEntity
     {
-        [NotMapped]
         public int Id { get; set; }
 
         public double Quantity { get; set; }

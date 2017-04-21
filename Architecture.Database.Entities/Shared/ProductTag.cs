@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Architecture.Database.Entities
+namespace Architecture.Database.Entities.Shared
 {
-    public class ProductTag : IEntity
+    public class ProductTag
     {
-        [NotMapped]
+        // Issue:
+        // The entity type 'ProductCategory' requires a primary key to be defined.
+        // Happens while using ProductId and CategoryId as a compound PK.
         public int Id { get; set; }
 
         public int ProductId { get; set; }

@@ -1,6 +1,8 @@
 ﻿using Architecture.Mappers.BrandMapper;
+using Architecture.Mappers.CartMapper;
 using Architecture.Mappers.CategoryMapper;
 using Architecture.Mappers.ProductMapper;
+using Architecture.Mappers.ProductUserMapper;
 using Architecture.Mappers.RatingMapper;
 using AutoMapper;
 
@@ -13,8 +15,10 @@ namespace Architecture.Mappers.Common
         )
         {
             configuration.AddProfile<BrandMappingProfile>();
-            configuration.AddProfile<ProductMappingProfile>();
+            configuration.AddProfile<CartMappingProfile>();
             configuration.AddProfile<CategoryMappingProfile>();
+            configuration.AddProfile<ProductMappingProfile>();
+            configuration.AddProfile<ProductUserMappingProfile>();
             configuration.AddProfile<RatingMappingProfile>();
         }
     }

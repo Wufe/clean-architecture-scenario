@@ -1,0 +1,30 @@
+
+@{
+    ViewData["Title"] = "Index";
+}
+@model Architecture.ViewModels.Cart.ShowCartViewModel
+
+<h2>Index</h2>
+
+<div class="row">
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        @foreach (var product in Model.Products)
+        {
+
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.Quantity</td>
+                <td>@product.Price</td>
+            </tr>
+        }
+    </table>
+    
+</div>
+

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Architecture.Models.Rating;
-using Architecture.Repositories.Rating;
 using System.Linq;
 using AutoMapper;
-using Architecture.Database.Entities;
+using Architecture.Repositories.Shared;
+using Architecture.Database.Entities.Shared;
 
 namespace Architecture.Services.RatingService
 {

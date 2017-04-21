@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Architecture.Database.Entities;
+using Architecture.Database.Entities.Shared;
 
 namespace Architecture.Database.Configuration
 {

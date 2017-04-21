@@ -100,8 +100,8 @@ namespace Architecture.Controllers.Admin
 
                 var selectedCategoriesIds =
                     model
-                        .SelectedCategories
-                        .Select(x => int.Parse(x));
+                        .SelectedCategories?
+                        .Select(x => int.Parse(x)) ?? new int[0];
                 var selectedBrandId =
                     int.Parse(
                         model
@@ -139,8 +139,8 @@ namespace Architecture.Controllers.Admin
             {
                 var selectedCategoriesIds =
                     model
-                        .SelectedCategories
-                        .Select(x => int.Parse(x));
+                        .SelectedCategories?
+                        .Select(x => int.Parse(x)) ?? new int[0];
 
                 var selectedBrandId =
                     int.Parse(

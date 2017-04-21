@@ -1,4 +1,5 @@
 ﻿using Architecture.Database.Entities;
+using Architecture.Database.Entities.Shared;
 using Architecture.Models.Rating;
 using AutoMapper;
 using System;

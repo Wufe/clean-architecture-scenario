@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Architecture.Database.Entities
+namespace Architecture.Database.Entities.Shared
 {
     public class Rating : IEntity
     {
-        [NotMapped]
         public int Id { get; set; }
 
         public Product Product { get; set; }

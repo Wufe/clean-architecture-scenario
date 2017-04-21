@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Architecture.Repositories.EntityFramework
 {
-    public class EFCategoryRepository : EFRepository<Database.Entities.Category>, ICategoryRepository
+    public class EFCategoryRepository : EFIndexedRepository<Database.Entities.Category>, ICategoryRepository
     {
         public EFCategoryRepository(DbContext context) : base(context)
         {

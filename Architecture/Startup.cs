@@ -18,14 +18,14 @@ using Architecture.Repositories.Shared;
 using Architecture.Repositories.Category;
 using Architecture.Mappers.Common;
 using Architecture.Repositories.Brand;
-using Architecture.Repositories.Rating;
 using Architecture.Services.ProductService;
 using Architecture.Services.CategoryService;
 using Architecture.Services.BrandService;
 using Architecture.Services.RatingService;
-using Architecture.Repositories.Cart;
 using Architecture.Services.UserService;
 using Architecture.Repositories.User;
+using Architecture.Services.CartService;
+using Architecture.Repositories.EntityFramework.Shared;
 
 namespace Architecture
 {
@@ -91,7 +91,7 @@ namespace Architecture
 
             // Repository registration to autofac container
             builder.RegisterType<EFBrandRepository>().As<IBrandRepository>();
-            builder.RegisterType<EFCartRepository>().As<ICartRepository>();
+            builder.RegisterType<EFProductUserRepository>().As<IProductUserRepository>();
             builder.RegisterType<EFCategoryRepository>().As<ICategoryRepository>();
             builder.RegisterType<EFProductRepository>().As<IProductRepository>();
             builder.RegisterType<EFProductCategoryRepository>().As<IProductCategoryRepository>();
@@ -99,7 +99,8 @@ namespace Architecture
             builder.RegisterType<EFUserRepository>().As<IUserRepository>();
 
             // Service registration to autofac container
-            builder.RegisterType<ReadBrandService>().As<IBrandService>();
+            builder.RegisterType<BrandService>().As<IBrandService>();
+            builder.RegisterType<CartService>().As<ICartService>();
             builder.RegisterType<CategoryService>().As<ICategoryService>();
             builder.RegisterType<ProductService>().As<IProductService>();
             builder.RegisterType<RatingService>().As<IRatingService>();

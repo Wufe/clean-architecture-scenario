@@ -46,6 +46,7 @@
   <ItemGroup>
     <Folder Include="Controllers\Api\" />
     <Folder Include="Views\CategoryAdmin\" />
+    <Folder Include="Views\Cart\" />
     <Folder Include="Views\ProductFront\" />
   </ItemGroup>
 </Project>

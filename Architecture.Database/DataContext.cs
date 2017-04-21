@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using Architecture.Database.Entities.Shared;
 
 namespace Architecture.Database
 {
@@ -17,15 +18,11 @@ namespace Architecture.Database
 
         public DbSet<Brand> Brands { get; set; }
 
-        public DbSet<Cart> Carts { get; set; }
-
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Product> Products { get; set; }
 
-        public DbSet<ProductCategory> ProductCategories { get; set; }
-
-        public DbSet<ProductTag> ProductTags { get; set; }
+        public DbSet<ProductUser> ProductUsers { get; set; }
 
         public DbSet<Rating> Ratings { get; set; }
 
@@ -41,9 +38,9 @@ namespace Architecture.Database
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ConfigureCart();
             builder.ConfigureProductCategory();
             builder.ConfigureProductTag();
+            builder.ConfigureProductUser();
             builder.ConfigureRating();
             base.OnModelCreating(builder);
         }

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Architecture.Models.Rating
 {
-    public interface IRatingBase : IEntity
+    public interface IRatingBase
     {
         int Vote { get; set; }
 

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Architecture.Repositories.User
 {
-    public interface IUserRepository : IRepository<Database.Entities.User>
+    public interface IUserRepository : IIndexedRepository<Database.Entities.User>
     {
     }
 }

@@ -27,10 +27,5 @@ namespace Architecture.Database
             optionsBuilder.UseSqlServer(
                 _configuration.GetConnectionString("DefaultConnection"));
         }
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-        }
     }
 }

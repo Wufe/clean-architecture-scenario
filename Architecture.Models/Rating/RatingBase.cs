@@ -8,8 +8,6 @@ namespace Architecture.Models.Rating
 {
     public class RatingBase : IRatingBase
     {
-        public int Id { get; set; }
-
         public int Vote { get; set; }
 
         public string Comment { get; set; }

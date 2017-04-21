@@ -19,9 +19,5 @@ namespace Architecture.Services.ProductService
         IEnumerable<ProductMinimal> GetAllProductsMinimal();
 
         IEnumerable<ProductMinimal> SearchProductsMinimal(string searchText);
-
-        IEnumerable<ProductBase> GetAllProductsInCart(int userId);
-
-        IEnumerable<ProductBase> GetAllProductsInCart(ClaimsPrincipal userClaim);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Architecture.Database.Entities;
+using Architecture.Database.Entities.Shared;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -32,17 +33,18 @@ namespace Architecture.Database
                         BrandId = 1,
                         Description = "???",
                         Name = "MSCCCCC",
-                        Price = 2.00
+                        Price = 2.00,
+                        ProductCategories = new List<ProductCategory>()
+                        {
+                            new ProductCategory
+                            {
+                                ProductId = 1,
+                                CategoryId = 1
+                            }
+                        }
                     }
                 );
                 context.SaveChanges();
-                context.ProductCategories.Add(
-                    new ProductCategory
-                    {
-                        ProductId = 1,
-                        CategoryId = 1
-                    }
-                );
 
                 var adminUser = new User
                 {

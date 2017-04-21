@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Architecture.Repositories.Category
 {
-    public interface ICategoryRepository : IRepository<Database.Entities.Category>
+    public interface ICategoryRepository : IIndexedRepository<Database.Entities.Category>
     {
         IQueryable<Database.Entities.Category> WithProducts(IQueryable<Database.Entities.Category> entities);
     }

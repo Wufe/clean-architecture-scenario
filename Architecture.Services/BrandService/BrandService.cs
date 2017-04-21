@@ -9,12 +9,12 @@ using Architecture.Database.Entities;
 
 namespace Architecture.Services.BrandService
 {
-    public class ReadBrandService : IBrandService
+    public class BrandService : IBrandService
     {
         private readonly IBrandRepository _brandRepository;
         private readonly IMapper _mapper;
 
-        public ReadBrandService(
+        public BrandService(
             IBrandRepository brandRepository,
             IMapper mapper
         )

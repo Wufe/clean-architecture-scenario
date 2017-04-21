@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Architecture.Repositories.EntityFramework
 {
-    public class EFBrandRepository : EFRepository<Database.Entities.Brand>, IBrandRepository
+    public class EFBrandRepository : EFIndexedRepository<Database.Entities.Brand>, IBrandRepository
     {
         public EFBrandRepository(DbContext context) : base(context)
         {

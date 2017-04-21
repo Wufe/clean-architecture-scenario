@@ -21,7 +21,6 @@ namespace Architecture.Mappers.ProductMapper
                         r =>
                             new RatingBase
                             {
-                                Id = r.Id,
                                 Comment = r.Comment,
                                 Vote = r.Vote,
                                 Product = new ProductBase

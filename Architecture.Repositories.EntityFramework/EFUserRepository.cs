@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Architecture.Repositories.EntityFramework
 {
-    public class EFUserRepository : EFRepository<Database.Entities.User>, IUserRepository
+    public class EFUserRepository : EFIndexedRepository<Database.Entities.User>, IUserRepository
     {
         public EFUserRepository(DbContext context) : base(context)
         {

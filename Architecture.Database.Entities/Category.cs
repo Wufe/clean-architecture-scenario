@@ -1,4 +1,5 @@
-﻿using Architecture.Models.Interfaces;
+﻿using Architecture.Database.Entities.Shared;
+using Architecture.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;

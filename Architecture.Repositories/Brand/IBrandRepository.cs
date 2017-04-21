@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Architecture.Repositories.Brand
 {
-    public interface IBrandRepository : IRepository<Database.Entities.Brand>
+    public interface IBrandRepository : IIndexedRepository<Database.Entities.Brand>
     {
     }
 }

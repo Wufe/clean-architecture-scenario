@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Architecture.Repositories.EntityFramework
 {
-    public class EFProductRepository : EFRepository<Database.Entities.Product>, IProductRepository
+    public class EFProductRepository : EFIndexedRepository<Database.Entities.Product>, IProductRepository
     {
         public EFProductRepository(DbContext context) : base(context)
         {

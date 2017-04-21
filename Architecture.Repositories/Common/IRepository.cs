@@ -1,19 +1,11 @@
-﻿using Architecture.Models.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Architecture.Repositories.Common
 {
-    public interface IRepository<T> : IReadOnlyRepository<T>
-        where T: class, IEntity
+    public interface IRepository<TEntity> : IReadRepository<TEntity>, IWriteRepository<TEntity>
+        where TEntity : class
     {
-        T Add(T entity);
-
-        void Update(T entity);
-
-        void Remove(T entity);
-
-        void Save();
     }
 }

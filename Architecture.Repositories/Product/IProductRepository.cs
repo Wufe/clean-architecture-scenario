@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Architecture.Repositories.Product
 {
-    public interface IProductRepository : IRepository<Database.Entities.Product>
+    public interface IProductRepository : IIndexedRepository<Database.Entities.Product>
     {
         IQueryable<Database.Entities.Product> WithBrand(IQueryable<Database.Entities.Product> entities);
 
