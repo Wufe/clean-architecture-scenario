@@ -1,28 +1,24 @@
 ﻿using Architecture.Repositories.EntityFramework.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
-using Architecture.Repositories.Product;
 using Architecture.Database.Entities;
 using System.Linq;
 
 namespace Architecture.Repositories.EntityFramework
 {
-    public class EFProductRepository : EFIndexedRepository<Database.Entities.Product>, IProductRepository
+    public class EFProductRepository : EFIndexedRepository<Product>, IProductRepository
     {
         public EFProductRepository(DbContext context) : base(context)
         {
         }
 
-        public IQueryable<Database.Entities.Product> WithBrand(IQueryable<Database.Entities.Product> entities)
+        public IQueryable<Product> WithBrand(IQueryable<Product> entities)
         {
             return
                 entities
                     .Include(x => x.Brand);
         }
 
-        public IQueryable<Database.Entities.Product> WithCategories(IQueryable<Database.Entities.Product> entities)
+        public IQueryable<Product> WithCategories(IQueryable<Product> entities)
         {
             return
                 entities
@@ -30,12 +26,25 @@ namespace Architecture.Repositories.EntityFramework
                         .ThenInclude(pc => pc.Category);
         }
 
-        public IQueryable<Database.Entities.Product> WithRatings(IQueryable<Database.Entities.Product> entities)
+        public IQueryable<Product> WithRatings(IQueryable<Product> entities)
         {
             return
                 entities
                     .Include(x => x.Ratings)
                         .ThenInclude(r => r.User);
+        }
+
+        public void Remove(int id)
+        {
+            var product = new Product
+            {
+                Id = id
+            };
+            Attach(ref product,
+                p =>
+                    p.Id == id
+            );
+            _context.Set<Product>().Remove(product);
         }
     }
 }

@@ -14,5 +14,7 @@ namespace Architecture.Repositories.Common
         void Remove(TEntity entity);
 
         void Save();
+
+        TEntity Attach(ref TEntity entity, Func<TEntity, bool> entityPredicate);
     }
 }

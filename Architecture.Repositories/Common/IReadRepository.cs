@@ -1,4 +1,5 @@
 ﻿using Architecture.Models.Interfaces;
+using System;
 using System.Linq;
 
 namespace Architecture.Repositories.Common

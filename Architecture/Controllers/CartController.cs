@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Architecture.Services.CartService;
 using Microsoft.AspNetCore.Authorization;
 using Architecture.ViewModels.Cart;
+using Architecture.Services;
 
 namespace Architecture.Controllers
 {

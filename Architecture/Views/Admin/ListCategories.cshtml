@@ -28,8 +28,7 @@
                 <td>@category.Title</td>
                 <td>
                     <a class="btn btn-xs btn-info" asp-controller="CategoryAdmin" asp-action="Update" asp-route-id="@category.Id">Modifica</a>
-                    <a class="btn btn-xs btn-primary">Visualizza</a>
-                    <a class="btn btn-xs btn-danger">Cancella</a>
+                    <a class="btn btn-xs btn-danger" asp-controller="CategoryAdmin" asp-action="Delete" asp-route-id="@category.Id">Cancella</a>
                 </td>
             </tr>
 

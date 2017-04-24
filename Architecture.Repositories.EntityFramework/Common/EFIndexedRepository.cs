@@ -15,6 +15,11 @@ namespace Architecture.Repositories.EntityFramework.Common
         {
         }
 
+        /// <summary>
+        /// Gets an entity of the set given its id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public TEntity GetById(int id)
         {
             return

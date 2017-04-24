@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Architecture.ViewModels.Category;
-using Architecture.Services.CategoryService;
 using Microsoft.AspNetCore.Authorization;
+using Architecture.Services;
+using Architecture.Models;
 
 namespace Architecture.Controllers.Admin
 {
@@ -71,13 +68,24 @@ namespace Architecture.Controllers.Admin
         {
             if (!ModelState.IsValid)
                 return View(model);
-            var category =
-                _categoryService
-                    .GetCategoryBase(id);
+            var category = new CategoryBase()
+            {
+                Id = id,
+                Title = model.Title
+            };
             if (!await TryUpdateModelAsync(category))
                 return View(model);
             _categoryService
                 .UpdateCategoryBase(category);
+            return RedirectToAction("ListCategories", "Admin", null);
+        }
+
+        [HttpGet]
+        [Route("{id}/delete")]
+        public IActionResult Delete(int id)
+        {
+            _categoryService
+                .Delete(id);
             return RedirectToAction("ListCategories", "Admin", null);
         }
     }

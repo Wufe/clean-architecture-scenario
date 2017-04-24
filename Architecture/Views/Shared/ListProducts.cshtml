@@ -40,8 +40,8 @@
                 <td>@product.Price</td>
                 <td>
                     <a class="btn btn-xs btn-info" asp-controller="ProductAdmin" asp-action="Update" asp-route-id="@product.Id">Modifica</a>
-                    <a class="btn btn-xs btn-primary">Visualizza</a>
-                    <a class="btn btn-xs btn-danger">Cancella</a>
+                    <a class="btn btn-xs btn-primary" asp-controller="ProductFront" asp-action="Read" asp-route-id="@product.Id">Visualizza</a>
+                    <a class="btn btn-xs btn-danger" asp-controller="ProductAdmin" asp-action="Delete" asp-route-id="@product.Id">Cancella</a>
                 </td>
             </tr>
 

@@ -4,6 +4,7 @@ using Architecture.Mappers.CategoryMapper;
 using Architecture.Mappers.ProductMapper;
 using Architecture.Mappers.ProductUserMapper;
 using Architecture.Mappers.RatingMapper;
+using Architecture.Mappers.UserMapper;
 using AutoMapper;
 
 namespace Architecture.Mappers.Common
@@ -20,6 +21,7 @@ namespace Architecture.Mappers.Common
             configuration.AddProfile<ProductMappingProfile>();
             configuration.AddProfile<ProductUserMappingProfile>();
             configuration.AddProfile<RatingMappingProfile>();
+            configuration.AddProfile<UserMappingProfile>();
         }
     }
 }

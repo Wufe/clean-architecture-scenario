@@ -2,18 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Architecture.ViewModels.Product;
-using Architecture.Models.Product;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Architecture.Models.Brand;
-using Architecture.Models.Category;
-using Architecture.Services.CategoryService;
-using Architecture.Services.BrandService;
-using Architecture.Services.ProductService;
-using Architecture.Services.RatingService;
 using Microsoft.AspNetCore.Authorization;
+using Architecture.Services;
+using Architecture.Models;
 
 namespace Architecture.Controllers.Admin
 {
@@ -95,8 +89,13 @@ namespace Architecture.Controllers.Admin
             if (ModelState.IsValid)
             {
                 var product =
-                    _productService
-                        .GetProductBase(id);
+                    new ProductBase()
+                    {
+                        Id = id,
+                        Name = model.Name,
+                        Description = model.Description,
+                        Price = model.Price
+                    };
 
                 var selectedCategoriesIds =
                     model
@@ -155,6 +154,15 @@ namespace Architecture.Controllers.Admin
             _PopulateBrands(model, model.SelectedBrand);
             _PopulateCategories(model, model.SelectedCategories);
             return View();
+        }
+
+        [HttpGet]
+        [Route("{id}/delete")]
+        public IActionResult Delete(int id)
+        {
+            _productService
+                .Delete(id);
+            return RedirectToAction("ListProducts", "Admin", null);
         }
 
         private void _PopulateBrands(GenericEditProductViewModel model, string selectedBrand = null)

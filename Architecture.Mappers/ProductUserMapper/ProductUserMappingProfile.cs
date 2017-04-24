@@ -1,10 +1,6 @@
-﻿using Architecture.Database.Entities;
-using Architecture.Database.Entities.Shared;
-using Architecture.Models.Product;
+﻿using Architecture.Database.Entities.Shared;
+using Architecture.Models;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Architecture.Mappers.ProductUserMapper
 {

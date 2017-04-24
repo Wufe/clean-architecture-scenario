@@ -6,17 +6,20 @@
 <h2>Pannello admin</h2>
 <hr />
 <div class="row">
-    <div class="col-md-offset-2 col-md-3">
-        <a asp-action="Categories" asp-controller="Admin">
-            <button class="btn btn-info">
-                Modifica Categorie
-            </button>
+    <div class="col-md-offset-1 col-md-3 col-sm-offset-1">
+        <a class="btn btn-info" asp-action="ListCategories" asp-controller="Admin">
+            Modifica Categorie
         </a>
     </div>
-    <div class="col-md-3">
-        <button class="btn btn-info disabled">
+    <div class="col-md-offset-1 col-md-3 col-sm-offset-1">
+        <a class="btn btn-info" asp-action="ListProducts" asp-controller="Admin">
+            Modifica Products
+        </a>
+    </div>
+    <div class="col-md-3 col-sm-5">
+        <a class="btn btn-info disabled">
             Modifica Brand
-        </button>
+        </a>
     </div>
 </div>
 

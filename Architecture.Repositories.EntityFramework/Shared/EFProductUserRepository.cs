@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
-using Architecture.Database.Entities;
+﻿using System.Linq;
 using Architecture.Repositories.EntityFramework.Common;
 using Microsoft.EntityFrameworkCore;
-using Architecture.Repositories.Shared;
 using Architecture.Database.Entities.Shared;
 
 namespace Architecture.Repositories.EntityFramework.Shared

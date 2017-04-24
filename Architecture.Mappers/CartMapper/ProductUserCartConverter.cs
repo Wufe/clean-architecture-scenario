@@ -1,18 +1,14 @@
-﻿using Architecture.Database.Entities;
-using Architecture.Database.Entities.Shared;
-using Architecture.Models.Cart;
-using Architecture.Models.Product;
+﻿using Architecture.Database.Entities.Shared;
+using Architecture.Models;
 using AutoMapper;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Architecture.Mappers.CartMapper
 {
-    class ProductUserCartConverter : ITypeConverter<IEnumerable<ProductUser>, ICartFull>
+    class ProductUserCartConverter : ITypeConverter<IEnumerable<ProductUser>, CartFull>
     {
-        public ICartFull Convert(IEnumerable<ProductUser> source, ICartFull destination, ResolutionContext context)
+        public CartFull Convert(IEnumerable<ProductUser> source, CartFull destination, ResolutionContext context)
         {
             if (!source.Any())
                 return null;

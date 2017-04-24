@@ -1,26 +1,37 @@
-﻿using Architecture.Repositories.EntityFramework.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Architecture.Database.Entities;
+using Architecture.Repositories.EntityFramework.Common;
 using Microsoft.EntityFrameworkCore;
-using Architecture.Repositories.Category;
-using Architecture.Database.Entities;
 using System.Linq;
 
 namespace Architecture.Repositories.EntityFramework
 {
-    public class EFCategoryRepository : EFIndexedRepository<Database.Entities.Category>, ICategoryRepository
+    public class EFCategoryRepository : EFIndexedRepository<Category>, ICategoryRepository
     {
         public EFCategoryRepository(DbContext context) : base(context)
         {
         }
 
-        public IQueryable<Database.Entities.Category> WithProducts(IQueryable<Database.Entities.Category> entities)
+        public void Remove(int id)
+        {
+            var category = new Category
+            {
+                Id = id
+            };
+            Attach(ref category,
+                c =>
+                    c.Id == id
+            );
+            _context.Set<Category>().Remove(category);
+        }
+
+        public IQueryable<Category> WithProducts(IQueryable<Category> entities)
         {
             return
                 entities
                     .Include(x => x.ProductCategories)
                         .ThenInclude(pc => pc.Product);
         }
+
+
     }
 }

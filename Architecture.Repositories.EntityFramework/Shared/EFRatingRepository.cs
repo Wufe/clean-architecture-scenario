@@ -1,6 +1,5 @@
 ﻿using Architecture.Repositories.EntityFramework.Common;
 using Microsoft.EntityFrameworkCore;
-using Architecture.Repositories.Shared;
 using Architecture.Database.Entities.Shared;
 
 namespace Architecture.Repositories.EntityFramework.Shared

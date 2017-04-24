@@ -5,27 +5,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Architecture.Services.Common;
 using Architecture.Database;
 using Architecture.Database.Entities;
 using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
-using Architecture.Repositories.Product;
 using Architecture.Repositories.EntityFramework;
-using Architecture.Repositories.Shared;
-using Architecture.Repositories.Category;
 using Architecture.Mappers.Common;
-using Architecture.Repositories.Brand;
-using Architecture.Services.ProductService;
-using Architecture.Services.CategoryService;
-using Architecture.Services.BrandService;
-using Architecture.Services.RatingService;
-using Architecture.Services.UserService;
-using Architecture.Repositories.User;
-using Architecture.Services.CartService;
 using Architecture.Repositories.EntityFramework.Shared;
+using Architecture.Services;
+using Architecture.Repositories;
 
 namespace Architecture
 {

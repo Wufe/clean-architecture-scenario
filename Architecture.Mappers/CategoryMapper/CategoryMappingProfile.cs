@@ -1,9 +1,6 @@
 ﻿using Architecture.Database.Entities;
-using Architecture.Models.Category;
+using Architecture.Models;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Architecture.Mappers.CategoryMapper
 {

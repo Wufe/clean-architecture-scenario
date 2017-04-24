@@ -1,0 +1,9 @@
+﻿namespace Architecture.Models
+{
+    public class UserBase
+    {
+        public int Id { get; set; }
+
+        public string UserName { get; set; }
+    }
+}

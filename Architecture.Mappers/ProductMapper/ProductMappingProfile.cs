@@ -1,12 +1,8 @@
 ﻿using Architecture.Database.Entities;
-using Architecture.Models.Brand;
-using Architecture.Models.Category;
-using Architecture.Models.Product;
 using AutoMapper;
-using System.Linq;
-using System;
+using Architecture.Models;
+using Architecture.Database.Entities.Shared;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Architecture.Mappers.ProductMapper
 {
@@ -21,6 +17,29 @@ namespace Architecture.Mappers.ProductMapper
                     prop => prop.MapFrom(x => x.Brand)
                 );
 
+
+            // TODO: Find another method to map all properties manually
+            // Mapping Product.ProductCategories to ProductFull.Categories
+            CreateMap<ProductCategory, CategoryBase>()
+                .ForMember(
+                    dest => dest.Id,
+                    prop => prop.MapFrom(x => x.Category.Id)
+                )
+                .ForMember(
+                    dest => dest.Title,
+                    prop => prop.MapFrom(x => x.Category.Title)
+                );
+
+            CreateMap<ProductTag, TagBase>()
+                .ForMember(
+                    dest => dest.Id,
+                    prop => prop.MapFrom(x => x.Tag.Id)
+                )
+                .ForMember(
+                    dest => dest.Title,
+                    prop => prop.MapFrom(x => x.Tag.Title)
+                );
+
             CreateMap<Product, ProductFull>()
                 .ForMember(
                     dest => dest.Brand,
@@ -28,12 +47,16 @@ namespace Architecture.Mappers.ProductMapper
                 )
                 .ForMember(
                     dest => dest.Categories,
-                    prop => prop.ResolveUsing<ProductCategoriesResolver>()
-                )
-                .ForMember(
-                    dest => dest.Ratings,
-                    prop => prop.ResolveUsing<ProductRatingsResolver>()
+                    prop => prop.MapFrom(x => x.ProductCategories)
                 );
+            //.ForMember(
+            //    dest => dest.Categories,
+            //    prop => prop.ResolveUsing<ProductCategoriesResolver>()
+            //);
+            //.ForMember(
+            //    dest => dest.Ratings,
+            //    prop => prop.ResolveUsing<ProductRatingsResolver>()
+            //);
 
             CreateMap<ProductBase, Product>();
         }
