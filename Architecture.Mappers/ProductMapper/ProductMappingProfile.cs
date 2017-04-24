@@ -10,13 +10,17 @@ namespace Architecture.Mappers.ProductMapper
     {
         public ProductMappingProfile()
         {
-            CreateMap<Product, ProductBase>();
-            CreateMap<Product, ProductMinimal>()
+            CreateMap<Product, ProductBase>()
                 .ForMember(
                     dest => dest.Brand,
-                    prop => prop.MapFrom(x => x.Brand)
+                    prop =>
+                    {
+                        prop.MapFrom(x => x.Brand);
+                        // In order to avoid "must be reducible node" exception
+                        // we say automapper that brand could be null
+                        prop.AllowNull();
+                    }
                 );
-
 
             // TODO: Find another method to map all properties manually
             // Mapping Product.ProductCategories to ProductFull.Categories
@@ -49,14 +53,6 @@ namespace Architecture.Mappers.ProductMapper
                     dest => dest.Categories,
                     prop => prop.MapFrom(x => x.ProductCategories)
                 );
-            //.ForMember(
-            //    dest => dest.Categories,
-            //    prop => prop.ResolveUsing<ProductCategoriesResolver>()
-            //);
-            //.ForMember(
-            //    dest => dest.Ratings,
-            //    prop => prop.ResolveUsing<ProductRatingsResolver>()
-            //);
 
             CreateMap<ProductBase, Product>();
         }

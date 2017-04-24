@@ -42,13 +42,13 @@ namespace Architecture.Controllers.Admin
             {
                 model.Products =
                     _productService
-                        .GetAllProductsMinimal();
+                        .GetAllProductsBase();
                 return View("ListProducts", model);
             }
 
             model.Products =
                     _productService
-                        .SearchProductsMinimal(model.SearchText);
+                        .SearchProductsBase(model.SearchText);
 
             return View("ListProducts", model);
         }

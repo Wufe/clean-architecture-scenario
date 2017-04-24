@@ -48,7 +48,7 @@ namespace Architecture.Controllers.Admin
             {
                 Products =
                     _productService
-                        .GetAllProductsMinimal()
+                        .GetAllProductsBase()
             };
             return View(model);
         }

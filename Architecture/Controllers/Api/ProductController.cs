@@ -21,7 +21,7 @@ namespace Architecture.Controllers.Api
         {
             var product =
                 _productService
-                    .GetProductMinimal(id);
+                    .GetProductBase(id);
             return Json(product);
         }
 

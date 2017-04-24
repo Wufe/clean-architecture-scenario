@@ -48,20 +48,6 @@ namespace Architecture.Services
                     .FirstOrDefault();
         }
 
-        public ProductMinimal GetProductMinimal(int id)
-        {
-            var products =
-                _productRepository
-                    .GetAll()
-                    .Where(p => p.Id == id);
-            products = _productRepository
-                    .WithBrand(products);
-            return
-                products
-                    .ProjectTo<ProductMinimal>()
-                    .FirstOrDefault();
-        }
-
         public ProductFull GetProductFull(int id)
         {
             var products =
@@ -96,20 +82,8 @@ namespace Architecture.Services
                     .ToList();
         }
 
-        public IEnumerable<ProductMinimal> GetAllProductsMinimal()
-        {
-            var products =
-                _productRepository
-                    .GetAll();
-            products = _productRepository
-                    .WithBrand(products);
-            return
-                products
-                    .ProjectTo<ProductMinimal>()
-                    .ToList();
-        }
 
-        public IEnumerable<ProductMinimal> SearchProductsMinimal(string searchText)
+        public IEnumerable<ProductBase> SearchProductsBase(string searchText)
         {
             var products =
                 _productRepository
@@ -127,8 +101,8 @@ namespace Architecture.Services
                     );
             return
                 products
-                    .ProjectTo<ProductMinimal>();
-                    //.ToList();
+                    .ProjectTo<ProductBase>()
+                    .ToList();
         }
 
         public void AddProduct(string name, string description, double price, int brandId)

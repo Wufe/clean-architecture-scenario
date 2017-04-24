@@ -2,7 +2,7 @@
 
 namespace Architecture.Models
 {
-    public class ProductFull : ProductMinimal
+    public class ProductFull : ProductBase
     {
         public IEnumerable<CategoryBase> Categories { get; set; }
 

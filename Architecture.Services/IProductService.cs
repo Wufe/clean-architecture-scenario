@@ -7,11 +7,9 @@ namespace Architecture.Services
     public interface IProductService
     {
         ProductBase GetProductBase(int id);
-        ProductMinimal GetProductMinimal(int id);
         ProductFull GetProductFull(int id);
         IEnumerable<ProductBase> GetAllProductsBase();
-        IEnumerable<ProductMinimal> GetAllProductsMinimal();
-        IEnumerable<ProductMinimal> SearchProductsMinimal(string searchText);
+        IEnumerable<ProductBase> SearchProductsBase(string searchText);
         void AddProduct(string name, string description, double price, int brandId);
         void AddProduct(string name, string description, double price, int brandId, IEnumerable<int> categoriesIds);
         void UpdateProductBase(ProductBase product, int selectedBrandId, IEnumerable<int> selectedCategoriesIds);
