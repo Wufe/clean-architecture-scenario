@@ -9,6 +9,8 @@ namespace Architecture.Mappers.BrandMapper
         public BrandMappingProfile()
         {
             CreateMap<Brand, BrandBase>();
+
+            CreateMap<BrandBase, Brand>();
         }
     }
 }
