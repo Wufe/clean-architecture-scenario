@@ -82,9 +82,9 @@ namespace Architecture.Services
                     .ToList();
         }
 
-
         public IEnumerable<ProductBase> SearchProductsBase(string searchText)
         {
+            searchText = searchText.ToLower();
             var products =
                 _productRepository
                     .GetAll();
@@ -95,9 +95,9 @@ namespace Architecture.Services
             products = products
                 .Where(
                         x =>
-                            x.Name.Contains(searchText) ||
-                            x.Description.Contains(searchText) ||
-                            x.Brand.Name.Contains(searchText)
+                            x.Name.ToLower().Contains(searchText) ||
+                            x.Description.ToLower().Contains(searchText) ||
+                            x.Brand.Name.ToLower().Contains(searchText)
                     );
             return
                 products
