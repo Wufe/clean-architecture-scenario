@@ -28,21 +28,5 @@ namespace Architecture.Database
 
         public DbSet<Tag> Tags { get; set; }
 
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(
-                _configuration.GetConnectionString("DefaultConnection"));
-        }
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            builder.ConfigureProductCategory();
-            builder.ConfigureProductTag();
-            builder.ConfigureProductUser();
-            builder.ConfigureRating();
-            base.OnModelCreating(builder);
-        }
     }
 }

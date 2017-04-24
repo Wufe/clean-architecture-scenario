@@ -10,22 +10,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace Architecture.Database
 {
-    public class IdentityContext : IdentityDbContext<User, IdentityRole<int>, int>, IDbContext
+    public class IdentityContext : DatabaseContext, IDbContext
     {
-        protected readonly IConfigurationRoot _configuration;
+        public IdentityContext(IConfigurationRoot configuration) : base(configuration)
+        {
+        }
 
         public DbSet<User> User { get; set; }
-
-        public IdentityContext(IConfigurationRoot configuration)
-        {
-            _configuration = configuration;
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(
-                _configuration.GetConnectionString("DefaultConnection"));
-        }
     }
 }

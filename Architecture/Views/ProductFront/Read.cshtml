@@ -10,7 +10,7 @@
     @if(Model.Categories.Any())
     {
         <div class="col-md-offset-2">
-            Categorie: @Model.Categories.Select(x => x.Title).Aggregate((x, y) => $"{x} - {y}")
+            Categorie: @Model.Categories.Select(x => x.Title).Aggregate((x, y) => $"{x}, {y}")
         </div>
     }
     <div class="col-md-offset-2">

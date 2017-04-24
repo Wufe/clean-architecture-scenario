@@ -24,6 +24,8 @@ namespace Architecture.Controllers
             var cart =
                 _cartService
                     .GetCart(User);
+            if (cart == null)
+                return RedirectToAction("Index", "Home", null);
             var model = new ShowCartViewModel()
             {
                 UserId = cart.UserId,
