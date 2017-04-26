@@ -8,11 +8,16 @@ using System.Security.Claims;
 using Architecture.Database.Entities.Shared;
 using Architecture.Models;
 using Architecture.Repositories;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text;
 
 namespace Architecture.Services
 {
     public class ProductService : IProductService
     {
+        private readonly ICacheService _cache;
+        private readonly ILogger<ProductService> _logger;
         private readonly IMapper _mapper;
         private readonly IProductRepository _productRepository;
         private readonly IProductCategoryRepository _productCategoryRepository;
@@ -20,6 +25,8 @@ namespace Architecture.Services
         private readonly IUserService _userService;
 
         public ProductService(
+            ICacheService cache,
+            ILogger<ProductService> logger,
             IMapper mapper,
             IProductRepository productRepository,
             IProductCategoryRepository productCategoryRepository,
@@ -27,6 +34,8 @@ namespace Architecture.Services
             IUserService userService
         )
         {
+            _cache = cache;
+            _logger = logger;
             _mapper = mapper;
             _productRepository = productRepository;
             _productCategoryRepository = productCategoryRepository;
@@ -50,23 +59,41 @@ namespace Architecture.Services
 
         public ProductFull GetProductFull(int id)
         {
-            var products =
-                _productRepository
-                    .GetAll()
-                    .Where(p => p.Id == id);
-            products =
-                _productRepository
-                    .WithBrand(products);
-            products =
-                _productRepository
-                    .WithCategories(products);
-            products =
-                _productRepository
-                    .WithRatings(products);
-            return
-                products
-                    .ProjectTo<ProductFull>()
-                    .FirstOrDefault();
+            _logger.LogTrace($"Getting product with id {id}");
+
+            ProductFull foundProduct = null;
+
+            var cacheKey = $"IProductService:GetProductFull:{id}";
+            var cachedProduct = _cache.Get<ProductFull>(cacheKey);
+            
+            if(cachedProduct != null)
+            {
+                foundProduct = cachedProduct;
+            }
+            else
+            {
+                var products =
+                    _productRepository
+                        .GetAll()
+                        .Where(p => p.Id == id);
+                products =
+                    _productRepository
+                        .WithBrand(products);
+                products =
+                    _productRepository
+                        .WithCategories(products);
+                products =
+                    _productRepository
+                        .WithRatings(products);
+                foundProduct =
+                    products
+                        .ProjectTo<ProductFull>()
+                        .FirstOrDefault();
+                _cache
+                    .Set(cacheKey, foundProduct, "ProductFull");
+            }
+
+            return foundProduct;
         }
 
         public IEnumerable<ProductBase> GetAllProductsBase()
@@ -170,6 +197,9 @@ namespace Architecture.Services
 
             _productRepository
                 .Save();
+
+            _cache
+                .Remove($"IProductService:GetProductFull:{product.Id}");
         }
 
         private void _AddProductCategories(IEnumerable<int> toBeAddedCategoriesLinks, int productId)
@@ -283,6 +313,8 @@ namespace Architecture.Services
                 .Remove(id);
             _productRepository
                 .Save();
+            _cache
+                .Remove($"IProductService:GetProductFull:{id}");
         }
     }
 }

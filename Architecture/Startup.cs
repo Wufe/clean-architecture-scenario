@@ -16,6 +16,7 @@ using Architecture.Mappers.Common;
 using Architecture.Repositories.EntityFramework.Shared;
 using Architecture.Services;
 using Architecture.Repositories;
+using Architecture.Services.Implementation;
 
 namespace Architecture
 {
@@ -54,6 +55,12 @@ namespace Architecture
             bool useSqlite = useSqliteEnvironment != null && useSqliteEnvironment.ToLower().Equals("true");
 
             services.AddAutoMapper(MappingConfiguration.Configure);
+
+            services.AddDistributedRedisCache(options =>
+            {
+                options.InstanceName = "Sample";
+                options.Configuration = Configuration.GetConnectionString("redis");
+            });
 
             services.AddMvc();
 
@@ -95,6 +102,9 @@ namespace Architecture
             builder.RegisterType<ProductService>().As<IProductService>();
             builder.RegisterType<RatingService>().As<IRatingService>();
             builder.RegisterType<UserService>().As<IUserService>();
+
+            builder.RegisterType<JsonSerializerService>().As<ISerializer>();
+            builder.RegisterType<DistributedCacheService>().As<ICacheService>();
 
             builder.RegisterType<AuthMessageSender>()
                 .As<ISmsSender>()

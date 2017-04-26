@@ -28,6 +28,7 @@ namespace Architecture.Controllers
 
             var model = new ShowProductViewModel()
             {
+                Id = product.Id,
                 Brand = product.Brand,
                 Categories = product.Categories,
                 Description = product.Description,

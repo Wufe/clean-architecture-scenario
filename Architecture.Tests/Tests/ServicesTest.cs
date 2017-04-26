@@ -1,4 +1,5 @@
 ﻿using Architecture.Services;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,6 +18,7 @@ namespace Architecture.Tests.Tests
             );
 
             _productService = new ProductService(
+                new LoggerFactory().CreateLogger<ProductService>(),
                 _mapper,
                 _productRepository,
                 _productCategoryRepository,

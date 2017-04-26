@@ -5,6 +5,8 @@ namespace Architecture.ViewModels.Product
 {
     public class ShowProductViewModel
     {
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
