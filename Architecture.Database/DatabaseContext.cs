@@ -29,6 +29,7 @@ namespace Architecture.Database
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.ConfigureLocalization();
             builder.ConfigureProductCategory();
             builder.ConfigureProductTag();
             builder.ConfigureProductUser();

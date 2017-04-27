@@ -1,6 +1,7 @@
 ﻿using Architecture.Mappers.BrandMapper;
 using Architecture.Mappers.CartMapper;
 using Architecture.Mappers.CategoryMapper;
+using Architecture.Mappers.LocalizationMapper;
 using Architecture.Mappers.ProductMapper;
 using Architecture.Mappers.ProductUserMapper;
 using Architecture.Mappers.RatingMapper;
@@ -18,6 +19,7 @@ namespace Architecture.Mappers.Common
             configuration.AddProfile<BrandMappingProfile>();
             configuration.AddProfile<CartMappingProfile>();
             configuration.AddProfile<CategoryMappingProfile>();
+            configuration.AddProfile<LocalizationMappingProfile>();
             configuration.AddProfile<ProductMappingProfile>();
             configuration.AddProfile<ProductUserMappingProfile>();
             configuration.AddProfile<RatingMappingProfile>();

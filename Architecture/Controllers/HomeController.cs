@@ -1,15 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using System;
+using System.Globalization;
 
 namespace Architecture.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController()
+        private readonly IStringLocalizer<HomeController> _localizer;
+
+        public HomeController(IStringLocalizer<HomeController> localizer)
         {
+            _localizer = localizer;
         }
+
         public IActionResult Index()
         {
-            return View();
+            //return View();
+            return Content(
+                String.Format($"Current culture: {CultureInfo.CurrentCulture.TwoLetterISOLanguageName}.\n" +
+                $"{_localizer["Say hi"]}")
+                
+            );
         }
 
         public IActionResult About()

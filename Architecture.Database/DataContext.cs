@@ -20,6 +20,8 @@ namespace Architecture.Database
 
         public DbSet<Category> Categories { get; set; }
 
+        public DbSet<Localization> Localizations { get; set; }
+
         public DbSet<Product> Products { get; set; }
 
         public DbSet<ProductUser> ProductUsers { get; set; }

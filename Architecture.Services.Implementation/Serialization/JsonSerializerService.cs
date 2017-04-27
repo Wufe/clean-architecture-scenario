@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Architecture.Services.Implementation
+namespace Architecture.Services.Implementation.Serialization
 {
     public class JsonSerializerService : ISerializer
     {

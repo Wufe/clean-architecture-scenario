@@ -17,6 +17,11 @@ using Architecture.Repositories.EntityFramework.Shared;
 using Architecture.Services;
 using Architecture.Repositories;
 using Architecture.Services.Implementation;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Architecture.Services.Implementation.Serialization;
+using Architecture.Services.Implementation.LocalizationService;
+using Microsoft.Extensions.Localization;
 
 namespace Architecture
 {
@@ -62,10 +67,32 @@ namespace Architecture
                 options.Configuration = Configuration.GetConnectionString("redis");
             });
 
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("it")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture(
+                    culture: "it",
+                    uiCulture: "it"
+                );
+
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+
             services.AddMvc();
+
+            services.AddIdentity<User, IdentityRole<int>>()
+                .AddEntityFrameworkStores<IdentityContext, int>()
+                .AddDefaultTokenProviders();
 
             // Autofac container
             var builder = new ContainerBuilder();
+            builder.Populate(services);
 
             builder.RegisterType<IdentityContext>()
                 .AsSelf()
@@ -82,10 +109,6 @@ namespace Architecture
                 .SingleInstance()
                 .ExternallyOwned();
 
-            services.AddIdentity<User, IdentityRole<int>>()
-                .AddEntityFrameworkStores<IdentityContext, int>()
-                .AddDefaultTokenProviders();
-
             // Repository registration to autofac container
             builder.RegisterType<EFBrandRepository>().As<IBrandRepository>();
             builder.RegisterType<EFProductUserRepository>().As<IProductUserRepository>();
@@ -94,6 +117,8 @@ namespace Architecture
             builder.RegisterType<EFProductCategoryRepository>().As<IProductCategoryRepository>();
             builder.RegisterType<EFRatingRepository>().As<IRatingRepository>();
             builder.RegisterType<EFUserRepository>().As<IUserRepository>();
+
+            builder.RegisterType<EFLocalizationRepository>().As<ILocalizationRepository>();
 
             // Service registration to autofac container
             builder.RegisterType<BrandService>().As<IBrandService>();
@@ -110,7 +135,10 @@ namespace Architecture
                 .As<ISmsSender>()
                 .As<IEmailSender>();
 
-            builder.Populate(services);
+            builder.RegisterGeneric(typeof(DatabaseStringLocalizer<>))
+                .As(typeof(IStringLocalizer<>));
+
+            
             this.ApplicationContainer = builder.Build();
             return new AutofacServiceProvider(this.ApplicationContainer);
         }
