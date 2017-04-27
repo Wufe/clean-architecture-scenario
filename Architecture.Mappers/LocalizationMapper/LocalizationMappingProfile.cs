@@ -1,9 +1,7 @@
 ﻿using Architecture.Database.Entities;
+using Architecture.Models.Common;
 using AutoMapper;
 using Microsoft.Extensions.Localization;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Architecture.Mappers.LocalizationMapper
 {
@@ -11,15 +9,23 @@ namespace Architecture.Mappers.LocalizationMapper
     {
         public LocalizationMappingProfile()
         {
-            CreateMap<Localization, LocalizedString>()
+            CreateMap<LocalizedString, LocalizedStringBase>()
                 .ForMember(
-                    dest => dest.Name,
-                    prop => prop.MapFrom(x => x.Key)
-                )
-                .ForMember(
-                    dest => dest.ResourceNotFound,
-                    prop => prop.MapFrom(x => x.Key)
+                    dest => dest.Key,
+                    prop => prop.MapFrom(x => x.Name)
                 );
+
+            CreateMap<LocalizedStringBase, LocalizedString>()
+                .ConstructUsing(
+                    x => new LocalizedString(x.Key, x.Value)
+                );
+
+            CreateMap<Localization, LocalizedString>()
+                .ConstructUsing(
+                    x => new LocalizedString(x.Key, x.Value)
+                );
+
+            CreateMap<Localization, LocalizedStringBase>();
         }
     }
 }

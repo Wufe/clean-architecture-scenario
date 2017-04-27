@@ -37,6 +37,7 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Architecture.Cache\Architecture.Cache.csproj" />
     <ProjectReference Include="..\Architecture.Database.Entities\Architecture.Database.Entities.csproj" />
     <ProjectReference Include="..\Architecture.Database\Architecture.Database.csproj" />
     <ProjectReference Include="..\Architecture.Mappers\Architecture.Mappers.csproj" />

@@ -45,7 +45,7 @@ namespace Architecture.Services.Implementation
 
             var secondsTimespan = int.TryParse(_configuration.GetSection($"{timespanConfig}:seconds").Value, out seconds);
             var minutesTimespan = int.TryParse(_configuration.GetSection($"{timespanConfig}:minutes").Value, out minutes);
-            var hoursTimespan = int.TryParse(_configuration.GetSection($"{timespanConfig}:hour").Value, out hours);
+            var hoursTimespan = int.TryParse(_configuration.GetSection($"{timespanConfig}:hours").Value, out hours);
 
             var totalTimespan =
                 TimeSpan

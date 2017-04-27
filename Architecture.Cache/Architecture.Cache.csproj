@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Architecture.Mappers\Architecture.Mappers.csproj" />
+    <ProjectReference Include="..\Architecture.Models\Architecture.Models.csproj" />
+    <ProjectReference Include="..\Architecture.Repositories\Architecture.Repositories.csproj" />
+    <ProjectReference Include="..\Architecture.Services\Architecture.Services.csproj" />
+  </ItemGroup>
+
+</Project>

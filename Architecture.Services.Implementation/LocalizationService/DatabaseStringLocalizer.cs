@@ -1,10 +1,11 @@
 ﻿using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Globalization;
 using Architecture.Repositories;
 using System.Linq;
+using AutoMapper;
+using Architecture.Models.Common;
 using AutoMapper.QueryableExtensions;
 
 namespace Architecture.Services.Implementation.LocalizationService
@@ -13,33 +14,59 @@ namespace Architecture.Services.Implementation.LocalizationService
     {
         private readonly CultureInfo _culture;
         private readonly ILocalizationRepository _localizationRepository;
+        private readonly ICacheService _cache;
+        private IMapper _mapper;
 
         public DatabaseStringLocalizer(
+            ICacheService cache,
             CultureInfo culture,
-            ILocalizationRepository localizationRepository
+            ILocalizationRepository localizationRepository,
+            IMapper mapper
         )
         {
+            _cache = cache;
             _culture = culture;
             _localizationRepository = localizationRepository;
+            _mapper = mapper;
         }
 
-        public DatabaseStringLocalizer(ILocalizationRepository localizationRepository)
+        public DatabaseStringLocalizer(
+            ICacheService cache,
+            ILocalizationRepository localizationRepository,
+            IMapper mapper
+        )
         {
+            _cache = cache;
             _culture = CultureInfo.CurrentCulture;
             _localizationRepository = localizationRepository;
+            _mapper = mapper;
         }
 
         public LocalizedString this[string name]
         {
             get
             {
-                return
+                var cacheKey = $"Localization.{name}";
+
+                LocalizedStringBase cachedString = 
+                    _cache
+                        .Get<LocalizedStringBase>(cacheKey);
+
+                if (cachedString != null)
+                    return _mapper.Map<LocalizedStringBase, LocalizedString>(cachedString);
+
+                LocalizedString savedString =
                     _localizationRepository
-                        .GetAll()
-                        .Where(x => x.Culture.Equals(_culture.TwoLetterISOLanguageName))
-                        .Select(x => new LocalizedString(x.Key, x.Value))
-                        .FirstOrDefault()
-                    ?? new LocalizedString(name, name, true);
+                    .GetAll()
+                    .Where(x => x.Culture.Equals(_culture.TwoLetterISOLanguageName))
+                    .ProjectTo<LocalizedString>()
+                    .FirstOrDefault()
+                ?? new LocalizedString(name, name, true);
+
+                _cache.Set(cacheKey, _mapper.Map<LocalizedString, LocalizedStringBase>(savedString), "LocalizedString");
+
+                return savedString;
+                    
             }
         }
 
@@ -65,13 +92,13 @@ namespace Architecture.Services.Implementation.LocalizationService
                 _localizationRepository
                     .GetAll()
                     .Where(x => x.Culture.Equals(_culture.TwoLetterISOLanguageName))
-                    .Select(x => new LocalizedString(x.Key, x.Value))
+                    .ProjectTo<LocalizedString>()
                     .ToList();
         }
 
         public IStringLocalizer WithCulture(CultureInfo culture)
         {
-            return new DatabaseStringLocalizer<T>(culture, _localizationRepository);
+            return new DatabaseStringLocalizer<T>(_cache, culture, _localizationRepository, _mapper);
         }
     }
 }

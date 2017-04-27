@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Localization;
 using Architecture.Services.Implementation.Serialization;
 using Architecture.Services.Implementation.LocalizationService;
 using Microsoft.Extensions.Localization;
+using Architecture.Cache;
 
 namespace Architecture
 {
@@ -131,12 +132,17 @@ namespace Architecture
             builder.RegisterType<JsonSerializerService>().As<ISerializer>();
             builder.RegisterType<DistributedCacheService>().As<ICacheService>();
 
+            builder.RegisterType<LocalizationCache>().AsSelf();
+
             builder.RegisterType<AuthMessageSender>()
                 .As<ISmsSender>()
                 .As<IEmailSender>();
 
             builder.RegisterGeneric(typeof(DatabaseStringLocalizer<>))
                 .As(typeof(IStringLocalizer<>));
+
+            builder.RegisterType<DatabaseStringLocalizer<Startup>>()
+                .As<IStringLocalizer>();
 
             
             this.ApplicationContainer = builder.Build();
@@ -164,6 +170,17 @@ namespace Architecture
                     dataContext.Database.EnsureCreated();
                     dataContext.EnsureSeedData();
                 }
+                var refreshLocaleCacheEnvironment = Environment.GetEnvironmentVariable("REFRESH_LOCALE_CACHE");
+                bool refreshLocale = refreshLocaleCacheEnvironment != null && refreshLocaleCacheEnvironment.ToLower().Equals("true");
+                if (refreshLocale) {
+                    using (var scope = ApplicationContainer.BeginLifetimeScope())
+                    {
+                        var localizationCache = scope.Resolve<LocalizationCache>();
+                        localizationCache
+                            .Populate();
+                    }
+                }
+                
             }
             else
             {
