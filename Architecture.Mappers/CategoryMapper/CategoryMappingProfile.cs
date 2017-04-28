@@ -8,14 +8,14 @@ namespace Architecture.Mappers.CategoryMapper
     {
         public CategoryMappingProfile()
         {
-            CreateMap<Category, CategoryBase>();
+            CreateMap<Category, CategoryBase>()
+                .ReverseMap();
+
             CreateMap<Category, CategoryFull>()
                 .ForMember(
                     dest => dest.Products,
                     prop => prop.ResolveUsing<CategoryProductsResolver>()
                 );
-
-            CreateMap<CategoryBase, Category>();
         }
     }
 }

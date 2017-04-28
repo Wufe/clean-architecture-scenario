@@ -20,7 +20,8 @@ namespace Architecture.Mappers.ProductMapper
                         // we say automapper that brand could be null
                         prop.AllowNull();
                     }
-                );
+                )
+                .ReverseMap();
 
             // TODO: Find another method to map all properties manually
             // Mapping Product.ProductCategories to ProductFull.Categories
@@ -54,7 +55,6 @@ namespace Architecture.Mappers.ProductMapper
                     prop => prop.MapFrom(x => x.ProductCategories)
                 );
 
-            CreateMap<ProductBase, Product>();
         }
     }
 }

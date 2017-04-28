@@ -3,18 +3,22 @@
     ViewData["Title"] = "Admin";
 }
 
-<h2>Pannello admin</h2>
+@inject IStringLocalizer Localizer
+
+<h2>
+    @Localizer["Admin Panel"]
+</h2>
 <hr />
 <div class="row">
     <div class="col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
         <a class="btn btn-info" style="margin: 5px 0px;" asp-action="ListCategories" asp-controller="Admin">
-            Modifica Categorie
+            @Localizer["Update Categories"]
         </a>
         <a class="btn btn-info" style="margin: 5px 0px;" asp-action="ListProducts" asp-controller="Admin">
-            Modifica Prodotti
+            @Localizer["Update Products"]
         </a>
         <a class="btn btn-info disabled" style="margin: 5px 0px;">
-            Modifica Brand
+            @Localizer["Update Brands"]
         </a>
     </div>
     

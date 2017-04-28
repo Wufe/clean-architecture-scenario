@@ -7,6 +7,7 @@ using System.Linq;
 using AutoMapper;
 using Architecture.Models.Common;
 using AutoMapper.QueryableExtensions;
+using Microsoft.Extensions.Logging;
 
 namespace Architecture.Services.Implementation.LocalizationService
 {
@@ -16,29 +17,34 @@ namespace Architecture.Services.Implementation.LocalizationService
         private readonly ILocalizationRepository _localizationRepository;
         private readonly ICacheService _cache;
         private IMapper _mapper;
+        private readonly ILogger<DatabaseStringLocalizer<T>> _logger;
 
         public DatabaseStringLocalizer(
             ICacheService cache,
             CultureInfo culture,
             ILocalizationRepository localizationRepository,
+            ILogger<DatabaseStringLocalizer<T>> logger,
             IMapper mapper
         )
         {
             _cache = cache;
             _culture = culture;
             _localizationRepository = localizationRepository;
+            _logger = logger;
             _mapper = mapper;
         }
 
         public DatabaseStringLocalizer(
             ICacheService cache,
             ILocalizationRepository localizationRepository,
+            ILogger<DatabaseStringLocalizer<T>> logger,
             IMapper mapper
         )
         {
             _cache = cache;
             _culture = CultureInfo.CurrentCulture;
             _localizationRepository = localizationRepository;
+            _logger = logger;
             _mapper = mapper;
         }
 
@@ -72,6 +78,11 @@ namespace Architecture.Services.Implementation.LocalizationService
                 }
                 else
                 {
+                    _logger.LogWarning(
+                        $"Cannot find cache key <{cacheKey}> " +
+                        $"corresponding to the localization key <{name}> " +
+                        $"for culture <{_culture.TwoLetterISOLanguageName}>." +
+                        $"A database requests overhead might rise.");
                     savedString = new LocalizedString(name, name, true);
                 }
                 return savedString;    
@@ -106,7 +117,7 @@ namespace Architecture.Services.Implementation.LocalizationService
 
         public IStringLocalizer WithCulture(CultureInfo culture)
         {
-            return new DatabaseStringLocalizer<T>(_cache, culture, _localizationRepository, _mapper);
+            return new DatabaseStringLocalizer<T>(_cache, culture, _localizationRepository, _logger, _mapper);
         }
     }
 }

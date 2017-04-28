@@ -13,12 +13,11 @@ namespace Architecture.Mappers.LocalizationMapper
                 .ForMember(
                     dest => dest.Key,
                     prop => prop.MapFrom(x => x.Name)
-                );
-
-            CreateMap<LocalizedStringBase, LocalizedString>()
-                .ConstructUsing(
-                    x => new LocalizedString(x.Key, x.Value)
-                );
+                )
+                .ReverseMap()
+                    .ConstructUsing(
+                        x => new LocalizedString(x.Key, x.Value)
+                    );
 
             CreateMap<Localization, LocalizedString>()
                 .ConstructUsing(
