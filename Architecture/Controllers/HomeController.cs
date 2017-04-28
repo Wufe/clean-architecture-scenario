@@ -16,12 +16,12 @@ namespace Architecture.Controllers
 
         public IActionResult Index()
         {
-            //return View();
-            return Content(
-                String.Format($"Current culture: {CultureInfo.CurrentCulture.TwoLetterISOLanguageName}.\n" +
-                $"{_localizer["Say hi"]}")
-                
-            );
+            return View();
+            //return Content(
+            //    String.Format($"Current culture: {CultureInfo.CurrentCulture.TwoLetterISOLanguageName}.\n" +
+            //    $"{_localizer["Say hi"]}")
+
+            //);
         }
 
         public IActionResult About()

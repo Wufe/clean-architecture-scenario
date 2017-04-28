@@ -58,15 +58,23 @@ namespace Architecture.Services.Implementation.LocalizationService
                 LocalizedString savedString =
                     _localizationRepository
                     .GetAll()
-                    .Where(x => x.Culture.Equals(_culture.TwoLetterISOLanguageName))
-                    .ProjectTo<LocalizedString>()
-                    .FirstOrDefault()
-                ?? new LocalizedString(name, name, true);
+                    .Where(
+                        x =>
+                            x.Culture.Equals(_culture.TwoLetterISOLanguageName) &&
+                            x.Key.Equals(name)
+                    )
+                    .Select(x => new LocalizedString(x.Key, x.Value, false))
+                    .FirstOrDefault();
 
-                _cache.Set(cacheKey, _mapper.Map<LocalizedString, LocalizedStringBase>(savedString), "LocalizedString");
-
-                return savedString;
-                    
+                if (savedString != null)
+                {
+                    _cache.Set(cacheKey, _mapper.Map<LocalizedString, LocalizedStringBase>(savedString), "LocalizedString");
+                }
+                else
+                {
+                    savedString = new LocalizedString(name, name, true);
+                }
+                return savedString;    
             }
         }
 

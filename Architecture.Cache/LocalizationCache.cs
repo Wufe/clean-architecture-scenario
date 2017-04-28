@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace Architecture.Cache
 {
+    /// <summary>
+    /// Populates the cache with the localized strings.
+    /// </summary>
     public class LocalizationCache
     {
         private readonly ILocalizationRepository _localizationRepository;

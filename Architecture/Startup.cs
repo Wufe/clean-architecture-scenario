@@ -170,6 +170,10 @@ namespace Architecture
                     dataContext.Database.EnsureCreated();
                     dataContext.EnsureSeedData();
                 }
+
+                // When setting the REFRESH_LOCALE_CACHE to true, the class populates
+                // the cache with the localized strings from the database.
+
                 var refreshLocaleCacheEnvironment = Environment.GetEnvironmentVariable("REFRESH_LOCALE_CACHE");
                 bool refreshLocale = refreshLocaleCacheEnvironment != null && refreshLocaleCacheEnvironment.ToLower().Equals("true");
                 if (refreshLocale) {
