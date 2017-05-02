@@ -1,15 +1,15 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Architecture.Database.Entities;
+using Architecture.Services;
+using Architecture.ViewModels.Account.Manage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Architecture.Database.Entities;
-using Architecture.ViewModels.Account.Manage;
-using Architecture.Services;
 
-namespace Architecture.Controllers
+namespace Architecture.Mvc.Controllers
 {
     [Authorize]
     public class ManageController : Controller

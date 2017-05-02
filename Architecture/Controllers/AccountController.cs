@@ -1,17 +1,17 @@
 ﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Architecture.Database.Entities;
+using Architecture.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Architecture.Database.Entities;
 using Architecture.ViewModels.Account;
-using Architecture.Services;
 
-namespace Architecture.Controllers
+namespace Architecture.Mvc.Controllers
 {
     [Authorize]
     public class AccountController : Controller

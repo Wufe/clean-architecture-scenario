@@ -1,5 +1,6 @@
 ﻿using Architecture;
 using Architecture.Database;
+using Architecture.Mvc;
 using Architecture.Tests.Database;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,14 +1,13 @@
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using Architecture.Models;
+using Architecture.Services;
 using Architecture.ViewModels.Category;
 using Microsoft.AspNetCore.Authorization;
-using Architecture.Services;
-using Architecture.Models;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Architecture.Controllers.Admin
+namespace Architecture.Mvc.Controllers.Admin
 {
     [Authorize]
-    [Produces("application/json")]
     [Route("admin/categories")]
     public class CategoryAdminController : Controller
     {

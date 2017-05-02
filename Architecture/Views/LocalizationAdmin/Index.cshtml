@@ -1,0 +1,74 @@
+﻿@model AdminLocalizationIndexViewModel
+@inject IStringLocalizer Localizer
+
+@{
+    var addLabel = Localizer["Add"];
+    var deleteLabel = Localizer["Delete"];
+    var cultureLabel = Localizer["Culture"];
+    var keyLabel = Localizer["Key"];
+    var valueLabel = Localizer["Value"];
+}
+
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10 col-xs-12">
+            @if (Model.LocalizedStrings.Any())
+            {
+                <form asp-action="Create" asp-controller="LocalizationAdmin" method="post">
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>
+                            <th>@cultureLabel</th>
+                            <th>@keyLabel</th>
+                            <th>@valueLabel</th>
+                            <th></th>
+                        </tr>
+                        @foreach (var localizedString in Model.LocalizedStrings)
+                        {
+                            <tr>
+                                <td>@localizedString.Culture</td>
+                                <td>@localizedString.Key</td>
+                                <td>@localizedString.Value</td>
+                                <td class="text-center">
+                                    <a
+                                        class="btn btn-xs btn-danger"
+                                        asp-action="Delete"
+                                        asp-controller="LocalizationAdmin"
+                                        asp-route-culture="@localizedString.Culture"
+                                        asp-route-key="@localizedString.Key">@deleteLabel</a>
+                                </td>
+                            </tr>
+                        }
+                        <tr class="form-group-sm">
+                            <td>
+                                <select asp-for="SelectedCulture"
+                                        asp-items="@Model.AvailableCultures"
+                                        class="form-control"></select>
+                                <span asp-validation-for="SelectedCulture"></span>
+                            </td>
+                            <td>
+                                <input asp-for="Key" class="form-control"/>
+                                <span asp-validation-for="Key"></span>
+                            </td>
+                            <td>
+                                <input asp-for="Value" class="form-control"/>
+                                <span asp-validation-for="Value"></span>
+                            </td>
+                            <td>
+                                <input type="submit" class="btn btn-success form-control" value="@addLabel">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+            }
+            else
+            {
+                <p>
+                    @Localizer["No localizations found."]
+                </p>
+            }
+        </div>
+
+    </div>
+}

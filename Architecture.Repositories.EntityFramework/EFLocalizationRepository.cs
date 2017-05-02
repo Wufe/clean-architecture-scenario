@@ -12,5 +12,20 @@ namespace Architecture.Repositories.EntityFramework
         public EFLocalizationRepository(DbContext context) : base(context)
         {
         }
+
+        public void Remove(string culture, string key)
+        {
+            var localization = new Localization()
+            {
+                Culture = culture,
+                Key = key
+            };
+            Attach(ref localization,
+                l =>
+                    l.Culture == culture &&
+                    l.Key == key
+            );
+            Remove(localization);
+        }
     }
 }

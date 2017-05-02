@@ -1,10 +1,8 @@
 ﻿using Architecture.Database.Entities;
 using Architecture.Database.Entities.Shared;
 using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Architecture.Database
 {
@@ -62,6 +60,131 @@ namespace Architecture.Database
 
                 context.Users.Add(adminUser);
 
+                context.SaveChanges();
+
+                context.Cultures.AddRange(new Culture[]
+                {
+                    new Culture()
+                    {
+                        Name = "it"
+                    },
+                    new Culture()
+                    {
+                        Name = "en-US"
+                    }
+                });
+
+                context.Localizations.AddRange(new Localization[]
+                {
+                    new Localization()
+                    {
+                        Culture = "it",
+                        Key = "Test accents",
+                        Value = "Test degli accènti"
+                    },
+                    new Localization()
+                    {
+                        Culture = "it",
+                        Key = "Most seen products",
+                        Value = "Prodotti più visti"
+                    },
+                    new Localization()
+                    {
+                        Culture = "it",
+                        Key = "Say hi",
+                        Value = "Di' ciao"
+                    },
+                    new Localization()
+                    {
+                        Culture = "it",
+                        Key = "Home",
+                        Value = "Home"
+                    },
+                    new Localization()
+                    {
+                        Culture = "it",
+                        Key = "Admin",
+                        Value = "Amministrazione"
+                    },
+                    new Localization()
+                    {
+                        Culture = "it",
+                        Key = "Admin Panel",
+                        Value = "Pannello di Amministrazione"
+                    },
+                    new Localization()
+                    {
+                        Culture = "it",
+                        Key = "Update Categories",
+                        Value = "Modifica Categorie"
+                    },
+                    new Localization()
+                    {
+                        Culture = "it",
+                        Key = "Update Products",
+                        Value = "Modifica Prodotti"
+                    },
+                    new Localization()
+                    {
+                        Culture = "it",
+                        Key = "Update Brands",
+                        Value = "Modifica Brand"
+                    },
+                    new Localization()
+                    {
+                        Culture = "en-US",
+                        Key = "Test accents",
+                        Value = "Test accents"
+                    },
+                    new Localization()
+                    {
+                        Culture = "en-US",
+                        Key = "Most seen products",
+                        Value = "Most seen products"
+                    },
+                    new Localization()
+                    {
+                        Culture = "en-US",
+                        Key = "Say hi",
+                        Value = "Say hi"
+                    },
+                    new Localization()
+                    {
+                        Culture = "en-US",
+                        Key = "Home",
+                        Value = "Home"
+                    },
+                    new Localization()
+                    {
+                        Culture = "en-US",
+                        Key = "Admin",
+                        Value = "Admin"
+                    },
+                    new Localization()
+                    {
+                        Culture = "en-US",
+                        Key = "Admin Panel",
+                        Value = "Admin Panel"
+                    },
+                    new Localization()
+                    {
+                        Culture = "en-US",
+                        Key = "Update Categories",
+                        Value = "Update Categories"
+                    },
+                    new Localization()
+                    {
+                        Culture = "en-US",
+                        Key = "Update Products",
+                        Value = "Update Products"
+                    },
+                    new Localization()
+                    {
+                        Culture = "en-US",
+                        Key = "Update Brands",
+                        Value = "Update Brands"
+                    }
+                });
                 context.SaveChanges();
             }
         }

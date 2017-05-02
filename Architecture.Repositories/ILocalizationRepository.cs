@@ -8,5 +8,6 @@ namespace Architecture.Repositories
 {
     public interface ILocalizationRepository : IRepository<Localization>
     {
+        void Remove(string culture, string key);
     }
 }

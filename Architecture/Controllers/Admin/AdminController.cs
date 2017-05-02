@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
+using Architecture.Services;
 using Architecture.ViewModels.Category;
 using Architecture.ViewModels.Product;
 using Microsoft.AspNetCore.Authorization;
-using Architecture.Services;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Architecture.Controllers.Admin
+namespace Architecture.Mvc.Controllers.Admin
 {
     [Authorize]
     [Produces("application/json")]

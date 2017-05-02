@@ -1,0 +1,17 @@
+﻿@model ProductBase
+
+<div class="col-md-4 col-xs-6">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @Model.Name
+        </div>
+        <div class="panel-body">
+            <p>
+                @Model.Name
+            </p>
+            <p>
+                @String.Format("{0:C}", Model.Price)
+            </p>
+        </div>
+    </div>
+</div>

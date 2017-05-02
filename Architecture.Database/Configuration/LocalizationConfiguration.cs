@@ -11,7 +11,7 @@ namespace Architecture.Database.Configuration
         public static void ConfigureLocalization(this ModelBuilder builder)
         {
             builder.Entity<Localization>()
-                .HasKey(t => new { t.Culture, t.Key });
+                .HasKey(t => new {t.Culture, t.Key});
         }
     }
 }

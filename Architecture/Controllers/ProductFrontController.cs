@@ -1,9 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
+using Architecture.Services;
 using Architecture.ViewModels.Product;
 using Microsoft.AspNetCore.Authorization;
-using Architecture.Services;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Architecture.Controllers
+namespace Architecture.Mvc.Controllers
 {
     [Route("products")]
     public class ProductFrontController : Controller

@@ -316,5 +316,21 @@ namespace Architecture.Services
             _cache
                 .Remove($"IProductService:GetProductFull:{id}");
         }
+
+        public IEnumerable<ProductBase> GetMostSeenProductsBase()
+        {
+            var products =
+                _productRepository
+                    .GetAll()
+                    //.OrderByDescending(x => x.)
+                    .Take(10);
+            products =
+                _productRepository
+                    .WithBrand(products);
+            return
+                products
+                    .ProjectTo<ProductBase>()
+                    .ToList();
+        }
     }
 }

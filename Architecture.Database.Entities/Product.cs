@@ -18,6 +18,8 @@ namespace Architecture.Database.Entities
 
         public double Price { get; set; }
 
+        public int Views { get; set; } = 0;
+
         public Brand Brand { get; set; }
 
         public int BrandId { get; set; }

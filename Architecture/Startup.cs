@@ -1,39 +1,43 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+﻿using System;
+using System.Globalization;
+using Architecture.Application.Services;
+using Architecture.Application.Services.Implementation;
+using Architecture.Cache;
 using Architecture.Database;
 using Architecture.Database.Entities;
-using System;
+using Architecture.Mappers.Common;
+using Architecture.Repositories;
+using Architecture.Repositories.EntityFramework;
+using Architecture.Repositories.EntityFramework.Shared;
+using Architecture.Services;
+using Architecture.Services.Implementation;
+using Architecture.Services.Implementation.LocalizationService;
+using Architecture.Services.Implementation.Serialization;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
-using Architecture.Repositories.EntityFramework;
-using Architecture.Mappers.Common;
-using Architecture.Repositories.EntityFramework.Shared;
-using Architecture.Services;
-using Architecture.Repositories;
-using Architecture.Services.Implementation;
-using System.Globalization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Localization;
-using Architecture.Services.Implementation.Serialization;
-using Architecture.Services.Implementation.LocalizationService;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
-using Architecture.Cache;
+using Microsoft.Extensions.Logging;
 
-namespace Architecture
+namespace Architecture.Mvc
 {
     public class Startup
     {
-        private readonly IHostingEnvironment _environment;
+        private readonly CultureInfo[] _supportedCultures = new[]
+        {
+            new CultureInfo("en-US"),
+            new CultureInfo("it")
+        };
 
         public Startup(IHostingEnvironment env)
         {
-            _environment = env;
-
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -57,32 +61,15 @@ namespace Architecture
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
 
-            var useSqliteEnvironment = Environment.GetEnvironmentVariable("USE_SQLITE");
-            bool useSqlite = useSqliteEnvironment != null && useSqliteEnvironment.ToLower().Equals("true");
+            //var useSqliteEnvironment = Environment.GetEnvironmentVariable("USE_SQLITE");
+            //bool useSqlite = useSqliteEnvironment != null && useSqliteEnvironment.ToLower().Equals("true");
 
             services.AddAutoMapper(MappingConfiguration.Configure);
 
             services.AddDistributedRedisCache(options =>
             {
-                options.InstanceName = "Sample";
+                options.InstanceName = "Arc:";
                 options.Configuration = Configuration.GetConnectionString("redis");
-            });
-
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                var supportedCultures = new[]
-                {
-                    new CultureInfo("en-US"),
-                    new CultureInfo("it")
-                };
-
-                options.DefaultRequestCulture = new RequestCulture(
-                    culture: "it",
-                    uiCulture: "it"
-                );
-
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
             });
 
             services.AddMvc();
@@ -112,6 +99,7 @@ namespace Architecture
 
             // Repository registration to autofac container
             builder.RegisterType<EFBrandRepository>().As<IBrandRepository>();
+            builder.RegisterType<EFCultureRepository>().As<ICultureRepository>();
             builder.RegisterType<EFProductUserRepository>().As<IProductUserRepository>();
             builder.RegisterType<EFCategoryRepository>().As<ICategoryRepository>();
             builder.RegisterType<EFProductRepository>().As<IProductRepository>();
@@ -125,12 +113,17 @@ namespace Architecture
             builder.RegisterType<BrandService>().As<IBrandService>();
             builder.RegisterType<CartService>().As<ICartService>();
             builder.RegisterType<CategoryService>().As<ICategoryService>();
+            builder.RegisterType<CultureService>().As<ICultureService>();
+            builder.RegisterType<LocalizationService>().As<ILocalizationService>();
             builder.RegisterType<ProductService>().As<IProductService>();
             builder.RegisterType<RatingService>().As<IRatingService>();
             builder.RegisterType<UserService>().As<IUserService>();
 
             builder.RegisterType<JsonSerializerService>().As<ISerializer>();
             builder.RegisterType<DistributedCacheService>().As<ICacheService>();
+
+            builder.RegisterType<AdminLocalizationControllerService>().As<IAdminLocalizationControllerService>();
+            builder.RegisterType<HomeControllerService>().As<IHomeControllerService>();
 
             builder.RegisterType<LocalizationCache>().AsSelf();
 
@@ -145,8 +138,8 @@ namespace Architecture
                 .As<IStringLocalizer>();
 
             
-            this.ApplicationContainer = builder.Build();
-            return new AutofacServiceProvider(this.ApplicationContainer);
+            ApplicationContainer = builder.Build();
+            return new AutofacServiceProvider(ApplicationContainer);
         }
 
 
@@ -195,6 +188,13 @@ namespace Architecture
 
             app.UseIdentity();
 
+            app.UseRequestLocalization(new RequestLocalizationOptions()
+            {
+                DefaultRequestCulture = new RequestCulture("en-US"),
+                SupportedCultures = _supportedCultures,
+                SupportedUICultures = _supportedCultures
+            });
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -203,7 +203,7 @@ namespace Architecture
             });
 
             // Disposing autofac container
-            appLifetime.ApplicationStopped.Register(() => this.ApplicationContainer.Dispose());
+            appLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());
         }
     }
 }

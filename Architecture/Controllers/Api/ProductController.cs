@@ -1,7 +1,7 @@
 using Architecture.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Architecture.Controllers.Api
+namespace Architecture.Mvc.Controllers.Api
 {
     [Produces("application/json")]
     [Route("api/products")]

@@ -19,12 +19,26 @@ namespace Architecture.Mappers.LocalizationMapper
                         x => new LocalizedString(x.Key, x.Value)
                     );
 
+            CreateMap<LocalizedString, LocalizedStringFull>()
+                .ForMember(
+                    dest => dest.Key,
+                    prop => prop.MapFrom(x => x.Name)
+                )
+                .ReverseMap()
+                .ConstructUsing(
+                    x => new LocalizedString(x.Key, x.Value)
+                );
+
             CreateMap<Localization, LocalizedString>()
                 .ConstructUsing(
                     x => new LocalizedString(x.Key, x.Value)
                 );
 
-            CreateMap<Localization, LocalizedStringBase>();
+            CreateMap<Localization, LocalizedStringBase>()
+                .ReverseMap();
+
+            CreateMap<Localization, LocalizedStringFull>()
+                .ReverseMap();
         }
     }
 }

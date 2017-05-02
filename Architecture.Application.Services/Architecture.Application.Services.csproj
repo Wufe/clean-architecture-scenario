@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Architecture\Architecture.csproj" />
+    <ProjectReference Include="..\Architecture.Presentation\Architecture.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

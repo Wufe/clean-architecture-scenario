@@ -1,24 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Architecture.Application.Services;
+using Architecture.ViewModels.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using System;
-using System.Globalization;
 
-namespace Architecture.Controllers
+namespace Architecture.Mvc.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IStringLocalizer<HomeController> _localizer;
+        private readonly IHomeControllerService _service;
 
-        public HomeController(IStringLocalizer<HomeController> localizer)
+        public HomeController(
+            IStringLocalizer<HomeController> localizer,
+            IHomeControllerService service
+        )
         {
             _localizer = localizer;
+            _service = service;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(
+                _service
+                    .GetIndexViewModel()
+            );
             //return Content(
-            //    String.Format($"Current culture: {CultureInfo.CurrentCulture.TwoLetterISOLanguageName}.\n" +
+            //    String.Format($"Current culture: {CultureInfo.CurrentCulture.Name}.\n" +
             //    $"{_localizer["Say hi"]}")
 
             //);

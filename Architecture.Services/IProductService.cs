@@ -16,5 +16,6 @@ namespace Architecture.Services
         void AddToCart(int productId, int userId, double quantity = 1);
         void AddToCart(int productId, ClaimsPrincipal userClaim, double quantity = 1);
         void Delete(int id);
+        IEnumerable<ProductBase> GetMostSeenProductsBase();
     }
 }

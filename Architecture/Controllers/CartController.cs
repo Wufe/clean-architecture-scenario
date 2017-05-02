@@ -1,9 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Architecture.ViewModels.Cart;
 using Architecture.Services;
+using Architecture.ViewModels.Cart;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Architecture.Controllers
+namespace Architecture.Mvc.Controllers
 {
     [Route("cart")]
     public class CartController : Controller

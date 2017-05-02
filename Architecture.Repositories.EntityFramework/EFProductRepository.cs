@@ -44,7 +44,7 @@ namespace Architecture.Repositories.EntityFramework
                 p =>
                     p.Id == id
             );
-            _context.Set<Product>().Remove(product);
+            Remove(product);
         }
     }
 }

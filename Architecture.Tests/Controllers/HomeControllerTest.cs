@@ -1,8 +1,8 @@
-﻿using Architecture.Controllers;
-using MyTested.AspNetCore.Mvc;
+﻿using MyTested.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Architecture.Mvc.Controllers;
 using Xunit;
 
 namespace Architecture.Tests.Controllers

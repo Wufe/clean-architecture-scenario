@@ -10,6 +10,8 @@
 
         public double Price { get; set; }
 
+        public int Views { get; set; }
+
         public BrandBase Brand { get; set; }
     }
 }
