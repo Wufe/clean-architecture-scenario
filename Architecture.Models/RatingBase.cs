@@ -2,6 +2,8 @@
 {
     public class RatingBase
     {
+        public int Id { get; set; }
+
         public int Vote { get; set; }
 
         public string Comment { get; set; }
