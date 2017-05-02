@@ -63,7 +63,7 @@ namespace Architecture.Services
 
             ProductFull foundProduct = null;
 
-            var cacheKey = $"IProductService:GetProductFull:{id}";
+            var cacheKey = $"ProdFull:{id}";
             var cachedProduct = _cache.Get<ProductFull>(cacheKey);
             
             if(cachedProduct != null)
@@ -199,7 +199,7 @@ namespace Architecture.Services
                 .Save();
 
             _cache
-                .Remove($"IProductService:GetProductFull:{product.Id}");
+                .Remove($"ProdFull:{product.Id}");
         }
 
         private void _AddProductCategories(IEnumerable<int> toBeAddedCategoriesLinks, int productId)
@@ -314,7 +314,7 @@ namespace Architecture.Services
             _productRepository
                 .Save();
             _cache
-                .Remove($"IProductService:GetProductFull:{id}");
+                .Remove($"ProdFull:{id}");
         }
 
         public IEnumerable<ProductBase> GetMostSeenProductsBase()
